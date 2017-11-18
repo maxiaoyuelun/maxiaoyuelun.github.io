@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="git本地文件夹上传至github"/>
+
+
+
+
+  <meta name="keywords" content="git, 吴钩的博客" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="吴钩的博客">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://gubangzhong.cn/2016/11/09/git本地文件夹上传至github/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> git本地文件夹上传至github - 吴钩的博客 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">吴钩的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">吴钩的博客</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          git本地文件夹上传至github
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2016-11-09
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/技术堆栈/">技术堆栈</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开发环境"><span class="toc-text">开发环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤"><span class="toc-text">步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建文件夹"><span class="toc-text">创建文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建测试文件"><span class="toc-text">创建测试文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加远程Git"><span class="toc-text">添加远程Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#远程与本地合并"><span class="toc-text">远程与本地合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上传本地文件"><span class="toc-text">上传本地文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除文件"><span class="toc-text">删除文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <blockquote>
+<p>本文初衷是想将本地部分文件夹推送到github进行保存共享，折腾一番终于有所斩获，在此笔记以备后来参考。</p>
+</blockquote>
+<h2 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h2><ol>
+<li>windows 10</li>
+<li><a href="https://git-scm.com/download" target="_blank" rel="noopener">git bash</a></li>
+</ol>
+<a id="more"></a>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p>安装完git bash之后，就可以在git bash内进行各种操作。</p>
+<p>右键Git Bash Here，你就会发现出现类似于linux的对话框，在这里你可以完全用linux指令来完成各种操作。</p>
+<blockquote>
+<p>本文已经假设你已经安装好git bash，并且完成本地与远程账户的关联，如果还没有完成请右转google。</p>
+</blockquote>
+<h3 id="创建文件夹"><a href="#创建文件夹" class="headerlink" title="创建文件夹"></a>创建文件夹</h3><p>假设我的根路径在D盘，右键<code>Git Bash Here</code>。在其中输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir abc</span><br><span class="line"><span class="built_in">cd</span> abc</span><br><span class="line">git init <span class="comment">#这是用来初始化文件夹git</span></span><br></pre></td></tr></table></figure>
+<p>此时你会发现在<code>D:/abc/</code>下出现<code>.git</code>文件夹，这是用来与github关联的。</p>
+<h3 id="创建测试文件"><a href="#创建测试文件" class="headerlink" title="创建测试文件"></a>创建测试文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir dir</span><br><span class="line">touch aaa</span><br><span class="line">touch dir/aaa</span><br><span class="line">git add --all</span><br></pre></td></tr></table></figure>
+<h3 id="添加远程Git"><a href="#添加远程Git" class="headerlink" title="添加远程Git"></a>添加远程Git</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https://github.com/maxiaoyuelun/abc.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>假设你已经创建好远程名叫<code>abc</code>的仓库了，并且假设你在仓库你添加了<code>README.md</code>文件。</p>
+</blockquote>
+<h3 id="远程与本地合并"><a href="#远程与本地合并" class="headerlink" title="远程与本地合并"></a>远程与本地合并</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">'merge'</span></span><br><span class="line">git pull origin master</span><br></pre></td></tr></table></figure>
+<p>至此你会在本地文件夹下发现多了<code>README.md</code>文件。</p>
+<h3 id="上传本地文件"><a href="#上传本地文件" class="headerlink" title="上传本地文件"></a>上传本地文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">'upload'</span></span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<p>在浏览器中打开就可以看到已经将本地文件夹内的内容上传至github中了。</p>
+<blockquote>
+<p>在进行<code>push</code>和<code>pull</code>之前，必须进行commit，否则会有error。</p>
+</blockquote>
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git rm aaa</span><br><span class="line">git status</span><br><span class="line">git commit -m <span class="string">'del aaa'</span></span><br><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+<p>其他对于文件的操作可在参考文献中寻找。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a href="http://git.oschina.net/progit/index.html" target="_blank" rel="noopener">Pro Git</a></li>
+<li><a href="http://www.yiibai.com/git/home.html" target="_blank" rel="noopener">Git教程</a></li>
+</ol>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://gubangzhong.cn">Bangzhong Gu</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://gubangzhong.cn/2016/11/09/git本地文件夹上传至github/">http://gubangzhong.cn/2016/11/09/git本地文件夹上传至github/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/git/">git</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/11/09/visual-studio-2013编译64位boost/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">visual-studio-2013编译64位boost</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/11/09/Laravel5-1开发博客系列一/">
+        <span class="next-text nav-default">Laravel5.1开发博客系列一</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:gu_bangzhong@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/maxiaoyuelun" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Bangzhong Gu</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>

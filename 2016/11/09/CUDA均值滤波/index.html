@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="CUDA均值滤波"/>
+
+
+
+
+  <meta name="keywords" content="c, c++, cuda, 吴钩的博客" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="吴钩的博客">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://gubangzhong.cn/2016/11/09/CUDA均值滤波/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> CUDA均值滤波 - 吴钩的博客 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">吴钩的博客</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">吴钩的博客</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          CUDA均值滤波
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2016-11-09
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/技术堆栈/">技术堆栈</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#main-h"><span class="toc-text">main.h</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#main-cpp"><span class="toc-text">main.cpp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kernel-cu"><span class="toc-text">kernel.cu</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <blockquote>
+<p>cuda进行均值滤波，主要blockIdx、blockDim、threadIdx等知识点。</p>
+</blockquote>
+<a id="more"></a>
+<h4 id="main-h"><a href="#main-h" class="headerlink" title="main.h"></a>main.h</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;//时间相关头文件，可用其中函数计算图像处理速度  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> datasize 80000</span></span><br></pre></td></tr></table></figure>
+<h4 id="main-cpp"><a href="#main-cpp" class="headerlink" title="main.cpp"></a>main.cpp</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2\opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"main.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="function"><span class="keyword">int</span> <span class="title">runtest_img</span><span class="params">(<span class="keyword">int</span>* host_a, <span class="keyword">int</span>* host_b, <span class="keyword">int</span> h, <span class="keyword">int</span> w)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello OpenCV CUDA"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	Mat img = imread(<span class="string">"me.jpg"</span>);</span><br><span class="line">	<span class="keyword">if</span> (img.empty())&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"No \"me.jpg\""</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Mat gray_img;</span><br><span class="line"></span><br><span class="line">	cvtColor(img, gray_img, CV_RGB2GRAY);</span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"Gray Image"</span>, gray_img);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> rows = gray_img.rows;</span><br><span class="line">	<span class="keyword">int</span> cols = gray_img.cols;</span><br><span class="line">	<span class="keyword">int</span> channels = gray_img.channels();</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"rows : "</span> &lt;&lt; rows &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"cols : "</span> &lt;&lt; cols &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"channels : "</span> &lt;&lt; channels &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span>* host_img = <span class="keyword">new</span> <span class="keyword">int</span>[rows*cols];</span><br><span class="line">	<span class="keyword">int</span>* host_output_img = <span class="keyword">new</span> <span class="keyword">int</span>[rows*cols];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++)&#123;</span><br><span class="line">		uchar* data = gray_img.ptr&lt;uchar&gt;(i);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols ; j++)&#123;</span><br><span class="line">			host_img[i*cols+j] = data[j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; host_img[(rows - <span class="number">1</span>)*cols + cols - <span class="number">1</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">long</span> now1 = clock();<span class="comment">//存储图像处理开始时间   </span></span><br><span class="line">	runtest_img(host_img, host_output_img, rows, cols);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"GPU运行时间为：%dms\n"</span>, <span class="keyword">int</span>(((<span class="keyword">double</span>)(clock() - now1)) / CLOCKS_PER_SEC * <span class="number">1000</span>));<span class="comment">//输出GPU处理时间  </span></span><br><span class="line">	Mat mean_filter_img(Size(cols, rows), CV_8U);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++)&#123;</span><br><span class="line">		uchar* data = mean_filter_img.ptr&lt;uchar&gt;(i);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols; j++)&#123;</span><br><span class="line">			data[j]=host_output_img[i*cols + j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	imshow(<span class="string">"Mean Filter Image"</span>, mean_filter_img);</span><br><span class="line"></span><br><span class="line">	cvWaitKey();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="kernel-cu"><a href="#kernel-cu" class="headerlink" title="kernel.cu"></a>kernel.cu</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"cuda_runtime.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"device_launch_parameters.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"main.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">checkCudaErrors</span><span class="params">(cudaError err)</span><span class="comment">//错误处理函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (cudaSuccess != err)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"CUDA Runtime API error: %s.\n"</span>, cudaGetErrorString(err));</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">meanFilter</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> *b, <span class="keyword">int</span> h,<span class="keyword">int</span> w)</span><span class="comment">//处理核函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tid = blockIdx.x*blockDim.x + threadIdx.x;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> nx = blockIdx.x;</span><br><span class="line">	<span class="keyword">int</span> ny = threadIdx.x;</span><br><span class="line">	<span class="keyword">if</span> (nx &gt; <span class="number">0</span> &amp;&amp; nx &lt; h<span class="number">-1</span> &amp;&amp; ny&gt;<span class="number">0</span> &amp;&amp; ny &lt; w<span class="number">-1</span>)&#123;</span><br><span class="line">		b[tid] = <span class="keyword">int</span>((a[(blockIdx.x - <span class="number">1</span>)*blockDim.x + threadIdx.x - <span class="number">1</span>] +</span><br><span class="line">			a[(blockIdx.x - <span class="number">1</span>)*blockDim.x + threadIdx.x +<span class="number">1</span>] +</span><br><span class="line">			a[(blockIdx.x +<span class="number">1</span>)*blockDim.x + threadIdx.x - <span class="number">1</span>] +</span><br><span class="line">			a[(blockIdx.x +<span class="number">1</span>)*blockDim.x + threadIdx.x + <span class="number">1</span>]) / <span class="number">4</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//b[tid] = a[tid];</span></span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="function"><span class="keyword">int</span> <span class="title">runtest_img</span><span class="params">(<span class="keyword">int</span>* host_a, <span class="keyword">int</span>* host_b, <span class="keyword">int</span> h, <span class="keyword">int</span> w)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">	cudaDeviceProp prop;</span><br><span class="line">	checkCudaErrors(cudaGetDeviceCount(&amp;num));</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;num; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		cudaGetDeviceProperties(&amp;prop, i);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> *dev_a, *dev_b; </span><br><span class="line">	<span class="comment">//int *dev_h, *dev_w;</span></span><br><span class="line">	checkCudaErrors(cudaMalloc((<span class="keyword">void</span>**)&amp;dev_a, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)* h*w));<span class="comment">//分配显卡内存</span></span><br><span class="line">	checkCudaErrors(cudaMalloc((<span class="keyword">void</span>**)&amp;dev_b, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)* h*w));</span><br><span class="line">	<span class="comment">//checkCudaErrors(cudaMalloc((void**)&amp;dev_h, sizeof(int)));//分配显卡内存</span></span><br><span class="line">	<span class="comment">//checkCudaErrors(cudaMalloc((void**)&amp;dev_w, sizeof(int)));</span></span><br><span class="line"></span><br><span class="line">	checkCudaErrors(cudaMemcpy(dev_a, host_a, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)* h*w, cudaMemcpyHostToDevice));<span class="comment">//将主机待处理数据内存块复制到显卡内存中</span></span><br><span class="line">	checkCudaErrors(cudaMemcpy(dev_b, host_b, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)* h*w, cudaMemcpyHostToDevice));</span><br><span class="line">	<span class="comment">//checkCudaErrors(cudaMemcpy(dev_h, &amp;h, sizeof(int), cudaMemcpyHostToDevice));//将主机待处理数据内存块复制到显卡内存中</span></span><br><span class="line">	<span class="comment">//checkCudaErrors(cudaMemcpy(dev_w, &amp;w, sizeof(int), cudaMemcpyHostToDevice));</span></span><br><span class="line"></span><br><span class="line">	meanFilter &lt;&lt;&lt;h, w &gt;&gt;&gt;(dev_a, dev_b, h,w);<span class="comment">//调用显卡处理数据</span></span><br><span class="line">	checkCudaErrors(cudaMemcpy(host_b, dev_b, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)* h*w, cudaMemcpyDeviceToHost));<span class="comment">//将显卡处理完数据拷回来</span></span><br><span class="line"></span><br><span class="line">	cudaFree(dev_a);<span class="comment">//清理显卡内存</span></span><br><span class="line">	cudaFree(dev_b);</span><br><span class="line">	<span class="comment">/*cudaFree(dev_h);</span></span><br><span class="line"><span class="comment">	cudaFree(dev_w);*/</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://gubangzhong.cn">Bangzhong Gu</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://gubangzhong.cn/2016/11/09/CUDA均值滤波/">http://gubangzhong.cn/2016/11/09/CUDA均值滤波/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/c/">c</a>
+            
+              <a href="/tags/c/">c++</a>
+            
+              <a href="/tags/cuda/">cuda</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/11/09/C++输出到txt日志/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">C++输出到txt日志</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/11/09/Hexo静态站点搭建/">
+        <span class="next-text nav-default">Hexo静态站点搭建</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:gu_bangzhong@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/maxiaoyuelun" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2017
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Bangzhong Gu</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>
