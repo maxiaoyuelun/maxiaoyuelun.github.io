@@ -22,7 +22,7 @@
 
 
 
-  <meta name="keywords" content="django, python, blog, Zeus'" />
+  <meta name="keywords" content="blog, django, python, Zeus'" />
 
 
 
@@ -227,9 +227,9 @@
     <div class="post-content">
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>近来突发兴致学习Django，初始根据教程学习，用内置服务器运行 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure>
 <p>在浏览器中输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8000</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8000</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>得到合适的页面，也是正确的页面。</p>
 <p>但是，在Django的开发文档中也这么说明，runserver只作为开发用途，而不是发行用途。</p>
@@ -239,17 +239,17 @@
 <blockquote>
 <p>我使用的是Ubuntu 14.04 LTS+Apache2.4+Python2或者3（根据mod_wsgi.so改变）+Django1.6或者以上</p>
 </blockquote>
-<h2 id="安装Apache等"><a href="#安装Apache等" class="headerlink" title="安装Apache等"></a>安装Apache等</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install apache2 libapache2-mod-wsgi python-django</span><br></pre></td></tr></table></figure>
+<h2 id="安装Apache等"><a href="#安装Apache等" class="headerlink" title="安装Apache等"></a>安装Apache等</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install apache2 libapache2-mod-wsgi python-django</span><br></pre></td></tr></table></figure>
 <h2 id="Apache配置"><a href="#Apache配置" class="headerlink" title="Apache配置"></a>Apache配置</h2><p>　　在/etc/apache2/中找到apache2.conf</p>
 <p>　　在最后添加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line"></span><br><span class="line">    ServerName hello.com</span><br><span class="line">    DocumentRoot /var/www/yourproject</span><br><span class="line">    &lt;Directory /var/www/yourprojec&gt; </span><br><span class="line">　　　　Order allow,deny </span><br><span class="line">　　　　Allow from all</span><br><span class="line">　　 &lt;/Directory&gt; </span><br><span class="line">&lt;/VirtualHost&gt;</span><br><span class="line">　　</span><br><span class="line"></span><br><span class="line">　　在/etc/apache2/sites-available/中添加wsgi.conf，在新创建的wsgi.conf中输入</span><br><span class="line"></span><br><span class="line">&lt;VirtualHost *:80&gt;  </span><br><span class="line">  </span><br><span class="line">    ServerName wsgi.testserver  </span><br><span class="line">    DocumentRoot /var/www/yourproject </span><br><span class="line">  </span><br><span class="line">   &lt;Directory /var/www/yourproject&gt;  </span><br><span class="line">       Order allow,deny  </span><br><span class="line">        Allow from all  </span><br><span class="line">   &lt;/Directory&gt;  </span><br><span class="line">  </span><br><span class="line">    WSGIScriptAlias / /var/www/django.wsgi  </span><br><span class="line">  </span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line"></span><br><span class="line">    ServerName hello.com</span><br><span class="line">    DocumentRoot /var/www/yourproject</span><br><span class="line">    &lt;Directory /var/www/yourprojec&gt; </span><br><span class="line">　　　　Order allow,deny </span><br><span class="line">　　　　Allow from all</span><br><span class="line">　　 &lt;/Directory&gt; </span><br><span class="line">&lt;/VirtualHost&gt;</span><br><span class="line">　　</span><br><span class="line"></span><br><span class="line">　　在/etc/apache2/sites-available/中添加wsgi.conf，在新创建的wsgi.conf中输入</span><br><span class="line"></span><br><span class="line">&lt;VirtualHost *:80&gt;  </span><br><span class="line">  </span><br><span class="line">    ServerName wsgi.testserver  </span><br><span class="line">    DocumentRoot /var/www/yourproject </span><br><span class="line">  </span><br><span class="line">   &lt;Directory /var/www/yourproject&gt;  </span><br><span class="line">       Order allow,deny  </span><br><span class="line">        Allow from all  </span><br><span class="line">   &lt;/Directory&gt;  </span><br><span class="line">  </span><br><span class="line">    WSGIScriptAlias / /var/www/django.wsgi  </span><br><span class="line">  </span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
 <p>　　</p>
 <p>　　</p>
 <h2 id="Django配置"><a href="#Django配置" class="headerlink" title="Django配置"></a>Django配置</h2><p>在/var/www/中创建django.wsgi，并在其中输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line">sys.path.append(&apos;/var/www/yourproject&apos;)</span><br><span class="line">os.environ[&apos;DJANGO_SETTINGS_MODULE&apos;] = &apos;yourproject.settings&apos;</span><br><span class="line"></span><br><span class="line">from django.core.wsgi import get_wsgi_application</span><br><span class="line">application = get_wsgi_application()</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line">sys.path.append(<span class="string">'/var/www/yourproject'</span>)</span><br><span class="line">os.environ[<span class="string">'DJANGO_SETTINGS_MODULE'</span>] = <span class="string">'yourproject.settings'</span></span><br><span class="line"></span><br><span class="line">from django.core.wsgi import get_wsgi_application</span><br><span class="line">application = get_wsgi_application()</span><br></pre></td></tr></table></figure>
 <p>　　</p>
 <h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo a2ensite wsgi.conf</span><br><span class="line"></span><br><span class="line">sudo service apache2 reload</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo a2ensite wsgi.conf</span><br><span class="line"></span><br><span class="line">sudo service apache2 reload</span><br></pre></td></tr></table></figure>
 <p>差不多成功了。</p>
 
       
@@ -286,11 +286,11 @@
         
           <div class="post-tags">
             
+              <a href="/tags/blog/">blog</a>
+            
               <a href="/tags/django/">django</a>
             
               <a href="/tags/python/">python</a>
-            
-              <a href="/tags/blog/">blog</a>
             
           </div>
         
