@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="Django安装指北"/>
+
+
+
+
+  <meta name="keywords" content="django, python, blog, Zeus'" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zeus'">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://gubangzhong.cn/2016/11/10/00010Django安装指北/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> Django安装指北 - Zeus' </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Zeus'</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Zeus'</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Django安装指北
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2016-11-10
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/技术堆栈/">技术堆栈</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Apache等"><span class="toc-text">安装Apache等</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Apache配置"><span class="toc-text">Apache配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Django配置"><span class="toc-text">Django配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>近来突发兴致学习Django，初始根据教程学习，用内置服务器运行 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure>
+<p>在浏览器中输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1:8000</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>得到合适的页面，也是正确的页面。</p>
+<p>但是，在Django的开发文档中也这么说明，runserver只作为开发用途，而不是发行用途。</p>
+<p>所以，寻求用Apache来运行Django。</p>
+<p>这也就带来了难题，即需要如题配置。经过大约一天的时间，各种谷歌、百度寻求帮助，排除一个个error终于配置成功。</p>
+<p>现将过程介绍如下，防止以后再遇到此类问题。</p>
+<blockquote>
+<p>我使用的是Ubuntu 14.04 LTS+Apache2.4+Python2或者3（根据mod_wsgi.so改变）+Django1.6或者以上</p>
+</blockquote>
+<h2 id="安装Apache等"><a href="#安装Apache等" class="headerlink" title="安装Apache等"></a>安装Apache等</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install apache2 libapache2-mod-wsgi python-django</span><br></pre></td></tr></table></figure>
+<h2 id="Apache配置"><a href="#Apache配置" class="headerlink" title="Apache配置"></a>Apache配置</h2><p>　　在/etc/apache2/中找到apache2.conf</p>
+<p>　　在最后添加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line"></span><br><span class="line">    ServerName hello.com</span><br><span class="line">    DocumentRoot /var/www/yourproject</span><br><span class="line">    &lt;Directory /var/www/yourprojec&gt; </span><br><span class="line">　　　　Order allow,deny </span><br><span class="line">　　　　Allow from all</span><br><span class="line">　　 &lt;/Directory&gt; </span><br><span class="line">&lt;/VirtualHost&gt;</span><br><span class="line">　　</span><br><span class="line"></span><br><span class="line">　　在/etc/apache2/sites-available/中添加wsgi.conf，在新创建的wsgi.conf中输入</span><br><span class="line"></span><br><span class="line">&lt;VirtualHost *:80&gt;  </span><br><span class="line">  </span><br><span class="line">    ServerName wsgi.testserver  </span><br><span class="line">    DocumentRoot /var/www/yourproject </span><br><span class="line">  </span><br><span class="line">   &lt;Directory /var/www/yourproject&gt;  </span><br><span class="line">       Order allow,deny  </span><br><span class="line">        Allow from all  </span><br><span class="line">   &lt;/Directory&gt;  </span><br><span class="line">  </span><br><span class="line">    WSGIScriptAlias / /var/www/django.wsgi  </span><br><span class="line">  </span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+<p>　　</p>
+<p>　　</p>
+<h2 id="Django配置"><a href="#Django配置" class="headerlink" title="Django配置"></a>Django配置</h2><p>在/var/www/中创建django.wsgi，并在其中输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import sys</span><br><span class="line">sys.path.append(<span class="string">'/var/www/yourproject'</span>)</span><br><span class="line">os.environ[<span class="string">'DJANGO_SETTINGS_MODULE'</span>] = <span class="string">'yourproject.settings'</span></span><br><span class="line"></span><br><span class="line">from django.core.wsgi import get_wsgi_application</span><br><span class="line">application = get_wsgi_application()</span><br></pre></td></tr></table></figure>
+<p>　　</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>输入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo a2ensite wsgi.conf</span><br><span class="line"></span><br><span class="line">sudo service apache2 reload</span><br></pre></td></tr></table></figure>
+<p>差不多成功了。</p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://gubangzhong.cn">Zeus</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://gubangzhong.cn/2016/11/10/00010Django安装指北/">http://gubangzhong.cn/2016/11/10/00010Django安装指北/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/django/">django</a>
+            
+              <a href="/tags/python/">python</a>
+            
+              <a href="/tags/blog/">blog</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/11/13/00033在Hexo中嵌入图片之七牛插件指北/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">在Hexo中嵌入图片之七牛插件指北</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/11/10/00038月下漫步/">
+        <span class="next-text nav-default">月下漫步</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:gu_bangzhong@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/maxiaoyuelun" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Zeus</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="Laravel5.1开发博客系列一"/>
+
+
+
+
+  <meta name="keywords" content="blog, laravel, Zeus'" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Zeus'">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.6.0" />
+
+
+
+<link rel="canonical" href="http://gubangzhong.cn/2016/11/09/00016Laravel5-1开发博客系列一/"/>
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+    <title> Laravel5.1开发博客系列一 - Zeus' </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">Zeus'</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">Zeus'</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Laravel5.1开发博客系列一
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2016-11-09
+        </span>
+        
+          <div class="post-category">
+            
+              <a href="/categories/技术堆栈/">技术堆栈</a>
+            
+          </div>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#开发工具"><span class="toc-text">开发工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发前设置"><span class="toc-text">开发前设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#修改hosts文件"><span class="toc-text">修改hosts文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启用WampServer虚拟域名功能"><span class="toc-text">启用WampServer虚拟域名功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加虚拟域名"><span class="toc-text">添加虚拟域名</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发必要资源"><span class="toc-text">开发必要资源</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加make-view"><span class="toc-text">添加make:view</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加AdminLTE"><span class="toc-text">添加AdminLTE</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+    <div class="post-content">
+      
+        <h2 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h2><p><code>WampServer</code>、<code>PHPStorm</code>、浏览器</p>
+<h2 id="开发前设置"><a href="#开发前设置" class="headerlink" title="开发前设置"></a>开发前设置</h2><h3 id="修改hosts文件"><a href="#修改hosts文件" class="headerlink" title="修改hosts文件"></a>修改<code>hosts</code>文件</h3><p>打开“我的电脑”，进入 <code>C:\Windows\System32\drivers\etc</code> 目录，然后打开 <code>hosts</code> 文件，在最下面添加一行代码：<code>127.0.0.1 maxiaoyuelun.cn</code>，之后保存退出（可能需要管理员权限）。</p>
+<a id="more"></a>
+<h3 id="启用WampServer虚拟域名功能"><a href="#启用WampServer虚拟域名功能" class="headerlink" title="启用WampServer虚拟域名功能"></a>启用<code>WampServer</code>虚拟域名功能</h3><p>进入 <code>C:\wamp\bin\apache\apache2.4.9\conf</code> 目录，打开<code>apache</code>配置文件 <code>httpd.conf</code> ，在里面搜索 <code>httpd-vhosts.conf</code> ，会找到下面这样一行：<br><code>#Include conf/extra/httpd-vhosts.conf</code><br>把最前面的 <code>#</code> 去掉（没有 <code>#</code> 的话直接进行下一步），保存并退出。</p>
+<h3 id="添加虚拟域名"><a href="#添加虚拟域名" class="headerlink" title="添加虚拟域名"></a>添加虚拟域名</h3><p>进入 <code>C:\wamp\bin\apache\apache2.4.9\conf\extra</code> 目录，打开 <code>httpd-vhosts.conf</code>文件，添加下面的代码：</p>
+<pre><code>&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@laravel.dev
+    DocumentRoot &quot;d:/wamp/www/laravel5/public&quot;
+    ServerName laravel.dev
+    ErrorLog &quot;logs/laravel.dev-error.log&quot;
+    CustomLog &quot;logs/laravel.dev-access.log&quot; common
+&lt;/VirtualHost&gt;
+</code></pre><p>至此，已经启用虚拟域名并添加好了虚拟域名，重启apache服务，在浏览器输入<code>http://laravel.dev/</code>，可以看到已经可以正常访问本地的<code>Laravel 5</code>了。</p>
+<h2 id="开发必要资源"><a href="#开发必要资源" class="headerlink" title="开发必要资源"></a>开发必要资源</h2><h3 id="添加make-view"><a href="#添加make-view" class="headerlink" title="添加make:view"></a>添加<code>make:view</code></h3><p>参考<a href="https://github.com/svenluijten/artisan-view" target="_blank" rel="noopener"><code>artisan-view</code></a>进行添加</p>
+<h3 id="添加AdminLTE"><a href="#添加AdminLTE" class="headerlink" title="添加AdminLTE"></a>添加<code>AdminLTE</code></h3><p>在此之前需安装好bower<br>进入<code>C:\wamp\www\Laravel\public</code>目录中，右击运行<code>Use Composer Here</code>，添加如下代码：<br><code>bower install admin-lte</code><br>参考文献：<a href="https://almsaeedstudio.com/blog/integrate-adminlte-with-laravel" target="_blank" rel="noopener"><code>Integrate AdminLTE with Laravel 5</code></a></p>
+<p>至此，初步准备阶段完成。</p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://gubangzhong.cn">Zeus</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="http://gubangzhong.cn/2016/11/09/00016Laravel5-1开发博客系列一/">http://gubangzhong.cn/2016/11/09/00016Laravel5-1开发博客系列一/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/blog/">blog</a>
+            
+              <a href="/tags/laravel/">laravel</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2016/11/09/00013git本地文件夹上传至github/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">git本地文件夹上传至github</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2016/11/09/00026Python爬虫抓取大伟吉他谱/">
+        <span class="next-text nav-default">Python爬虫抓取大伟吉他谱</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:gu_bangzhong@163.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/maxiaoyuelun" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+    
+    
+  </div>
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Zeus</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.6.0"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=2.6.0"></script>
+
+  </body>
+</html>
