@@ -17,8 +17,12 @@
 
 
 
+  <meta name="description" content="00078TFRecords读取测试"/>
 
 
+
+
+  <meta name="keywords" content="tensorflow, Zeus'" />
 
 
 
@@ -38,7 +42,7 @@
 
 
 
-<link rel="canonical" href="http://gubangzhong.cn/"/>
+<link rel="canonical" href="http://gubangzhong.cn/2018/03/25/00078TFRecords读取测试/"/>
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=2.6.0" />
@@ -77,7 +81,7 @@
 
 
 
-    <title> Zeus' </title>
+    <title> 00078TFRecords读取测试 - Zeus' </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -206,14 +210,12 @@
         <div class="content-wrapper">
           <div id="content" class="content">
             
-  <section id="posts" class="posts">
-    
-      
+  
   <article class="post">
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2018/03/25/00078TFRecords读取测试/">00078TFRecords读取测试</a>
+          00078TFRecords读取测试
         
       </h1>
 
@@ -237,1016 +239,71 @@
 
     <div class="post-content">
       
-        
-        
-
-        
-          <a id="more"></a>
+        <a id="more"></a>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> tensorflow.contrib <span class="keyword">import</span> slim</span><br><span class="line"><span class="keyword">from</span> tensorflow.contrib.slim.nets <span class="keyword">import</span> vgg</span><br><span class="line"></span><br><span class="line">train_files_path=<span class="string">'D://science//data//DogsandCats//train//'</span></span><br><span class="line">records_path=<span class="string">'records_data'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_tfrecord_data</span><span class="params">(train_files_path=<span class="string">'D://science//data//DogsandCats//train//'</span>)</span>:</span></span><br><span class="line">    dirs=os.listdir(train_files_path)</span><br><span class="line">    print(len(dirs))</span><br><span class="line">    random.shuffle(dirs)</span><br><span class="line">    print(len(dirs))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">25</span>):</span><br><span class="line">        writer=tf.python_io.TFRecordWriter(<span class="string">"records_data//cd_%d.tfrecords"</span>% i)</span><br><span class="line">        spilt_dirs=dirs[i*<span class="number">1000</span>:(i+<span class="number">1</span>)*<span class="number">1000</span>]</span><br><span class="line">        print(spilt_dirs)</span><br><span class="line">        print(len(spilt_dirs))</span><br><span class="line">        <span class="keyword">for</span> img_name <span class="keyword">in</span> spilt_dirs:</span><br><span class="line">            <span class="comment"># print(img_name)</span></span><br><span class="line">            s=str.split(img_name,<span class="string">'.'</span>)</span><br><span class="line">            <span class="comment"># print(s[0])</span></span><br><span class="line">            <span class="keyword">if</span> s[<span class="number">0</span>]==<span class="string">'cat'</span>:</span><br><span class="line">                label=<span class="number">0</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                label=<span class="number">1</span></span><br><span class="line">            <span class="comment"># print(label)</span></span><br><span class="line">            img_path=train_files_path+img_name</span><br><span class="line">            img=Image.open(img_path)</span><br><span class="line">            width=img.width</span><br><span class="line">            height=img.height</span><br><span class="line">            <span class="comment"># img=img.resize((224,224))</span></span><br><span class="line">            img_raw=img.tobytes()</span><br><span class="line">            example=tf.train.Example(</span><br><span class="line">                features=tf.train.Features(</span><br><span class="line">                    feature=&#123;</span><br><span class="line">                        <span class="string">"image/label"</span>: tf.train.Feature(int64_list=tf.train.Int64List(value=[label])),</span><br><span class="line">                        <span class="string">"image/height"</span>: tf.train.Feature(int64_list=tf.train.Int64List(value=[height])),</span><br><span class="line">                        <span class="string">"image/width"</span>: tf.train.Feature(int64_list=tf.train.Int64List(value=[width])),</span><br><span class="line">                        <span class="string">"image/encoded"</span>: tf.train.Feature(bytes_list=tf.train.BytesList(value=[img_raw])),</span><br><span class="line">                    &#125;</span><br><span class="line">                )</span><br><span class="line">            )</span><br><span class="line">            writer.write(example.SerializeToString())</span><br><span class="line">        writer.close()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_tfrecord_data</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">shuffle_tfrecords_files</span><span class="params">()</span>:</span></span><br><span class="line">        tfrecords_files = os.listdir(<span class="string">"records_data//"</span>)</span><br><span class="line">        <span class="comment"># print(tfrecords_files)</span></span><br><span class="line">        random.shuffle(tfrecords_files)</span><br><span class="line">        <span class="comment"># print(tfrecords_files)</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(tfrecords_files)):</span><br><span class="line">            tfrecords_files[i] = <span class="string">"records_data//"</span> + tfrecords_files[i]</span><br><span class="line">        print(tfrecords_files)</span><br><span class="line">        <span class="keyword">return</span> tfrecords_files</span><br><span class="line"></span><br><span class="line">    filename_queue=tf.train.string_input_producer(shuffle_tfrecords_files())</span><br><span class="line">    <span class="comment"># filename_queue = tf.train.string_input_producer(["records_data//cd_0.tfrecords"])</span></span><br><span class="line">    reader=tf.TFRecordReader()</span><br><span class="line">    _,serialized=reader.read(filename_queue)</span><br><span class="line">    features=tf.parse_single_example(</span><br><span class="line">        serialized=serialized,</span><br><span class="line">        features=&#123;</span><br><span class="line">            <span class="string">'image/label'</span>: tf.FixedLenFeature(shape=(), dtype=tf.int64),</span><br><span class="line">            <span class="string">'image/encoded'</span>: tf.FixedLenFeature(shape=(), dtype=tf.string),</span><br><span class="line">            <span class="string">'image/width'</span>: tf.FixedLenFeature(shape=(), dtype=tf.int64),</span><br><span class="line">            <span class="string">'image/height'</span>: tf.FixedLenFeature(shape=(), dtype=tf.int64)</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    label = tf.cast(features[<span class="string">'image/label'</span>], tf.int32)</span><br><span class="line">    label=slim.one_hot_encoding(label,<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    width = tf.cast(features[<span class="string">'image/width'</span>], tf.int32)</span><br><span class="line">    height = tf.cast(features[<span class="string">'image/height'</span>], tf.int32)</span><br><span class="line"></span><br><span class="line">    record_image = tf.decode_raw(features[<span class="string">'image/encoded'</span>], tf.uint8)</span><br><span class="line">    image=tf.reshape(record_image,[height,width,<span class="number">3</span>])</span><br><span class="line">    <span class="comment"># tf.summary.image("original image",tf.expand_dims(image,0))</span></span><br><span class="line">    image=tf.image.resize_images(image,[<span class="number">224</span>,<span class="number">224</span>])</span><br><span class="line">    tf.summary.image(<span class="string">"resized image"</span>,tf.expand_dims(image,<span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> image,label</span><br><span class="line"></span><br><span class="line">image,label=read_tfrecord_data()</span><br><span class="line"></span><br><span class="line">image_batch,label_batch=tf.train.shuffle_batch(</span><br><span class="line">    [image,label],</span><br><span class="line">    batch_size=<span class="number">32</span>,</span><br><span class="line">    capacity=<span class="number">300</span>,</span><br><span class="line">    min_after_dequeue=<span class="number">100</span>,</span><br><span class="line">    num_threads=<span class="number">4</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">x=tf.placeholder(dtype=tf.float32,shape=[<span class="keyword">None</span>,<span class="number">224</span>,<span class="number">224</span>,<span class="number">3</span>])</span><br><span class="line">y_=tf.placeholder(dtype=tf.float32,shape=[<span class="keyword">None</span>,<span class="number">2</span>])</span><br><span class="line">logits,end_points=vgg.vgg_16(x,<span class="number">2</span>,is_training=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">gs=tf.get_collection(tf.GraphKeys.VARIABLES)</span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> gs:</span><br><span class="line">    tf.summary.histogram(var.name,var)</span><br><span class="line"></span><br><span class="line">loss=tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y_, logits=logits))</span><br><span class="line">acc=tf.reduce_mean(tf.cast(tf.equal(tf.arg_max(logits, dimension=<span class="number">1</span>), tf.arg_max(y_, dimension=<span class="number">1</span>)), tf.float32))</span><br><span class="line">train_op = tf.train.GradientDescentOptimizer(<span class="number">0.001</span>).minimize(loss)</span><br><span class="line"></span><br><span class="line">tf.summary.scalar(<span class="string">'loss'</span>,loss)</span><br><span class="line">tf.summary.scalar(<span class="string">'acc'</span>,acc)</span><br><span class="line"><span class="comment"># saver=tf.train.Saver()</span></span><br><span class="line">saver=tf.train.Saver(tf.trainable_variables()[:<span class="number">-2</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    merged = tf.summary.merge_all()</span><br><span class="line">    summary_writer = tf.summary.FileWriter(<span class="string">'image_tensorboard'</span>, sess.graph)</span><br><span class="line">    sess.run(tf.initialize_all_variables())</span><br><span class="line">    saver.restore(sess,<span class="string">'D:/science/github/tensorboy/repo_tf/pre_trained/vgg_16.ckpt'</span>)</span><br><span class="line">    coord=tf.train.Coordinator()</span><br><span class="line">    threads=tf.train.start_queue_runners(sess=sess,coord=coord)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5000</span>):</span><br><span class="line">        <span class="comment"># print(i)</span></span><br><span class="line">        image,label=sess.run([image_batch,label_batch])</span><br><span class="line">        <span class="comment"># print(label.shape)</span></span><br><span class="line">        summary_all,loss_,acc_,_=sess.run([merged,loss,acc,train_op],feed_dict=&#123;x:image,y_:label&#125;)</span><br><span class="line">        <span class="keyword">if</span> i%<span class="number">50</span>==<span class="number">0</span>:</span><br><span class="line">            <span class="comment"># print("====")</span></span><br><span class="line">            summary_writer.add_summary(summary_all, i)</span><br><span class="line">            print(<span class="string">"Step: %s, Loss: %s, Accuracy: %s"</span>%(i, loss_, acc_))</span><br><span class="line">            <span class="keyword">if</span> i%<span class="number">500</span>==<span class="number">0</span>:</span><br><span class="line">                saver.save(sess, <span class="string">'./image_tensorboard/cd_vgg16'</span>, global_step=i)</span><br><span class="line">        <span class="comment"># print(image.shape)</span></span><br><span class="line">    coord.request_stop()</span><br><span class="line">    coord.join(threads)</span><br><span class="line">    summary_writer.close()</span><br></pre></td></tr></table></figure>
-        
       
     </div>
 
     
-
-    
-
-  </article>
-
-    
       
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/03/23/00077区块链/">区块链</a>
-        
-      </h1>
+      
 
-      <div class="post-meta">
-        <span class="post-time">
-          2018-03-23
-        </span>
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>Author: </span>
+      <a href="http://gubangzhong.cn">Zeus</a>
+    </p>
+    <p class="copyright-item">
+      <span>Link: </span>
+      <a href="http://gubangzhong.cn/2018/03/25/00078TFRecords读取测试/">http://gubangzhong.cn/2018/03/25/00078TFRecords读取测试/</a>
+    </p>
+    <p class="copyright-item">
+      <span>License: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
         
-          <div class="post-category">
+          <div class="post-tags">
             
-              <a href="/categories/技术堆栈/">技术堆栈</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <p>To be Continued!!!</p>
-          <div class="read-more">
-            <a href="/2018/03/23/00077区块链/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/03/23/00076半监督学习以及GAN的应用/">半监督学习以及GAN的应用</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-03-23
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/技术堆栈/">技术堆栈</a>
+              <a href="/tags/tensorflow/">tensorflow</a>
             
           </div>
         
         
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <p>最近看了对抗网络，感觉开启了另一扇大门，尤其应用在半监督学习上。举一个例子，在mnist数据集上，只需要200带标签的数据以及其他不带标签的数据(参考资料3)，就能达到监督学习所能达到的准确率，这令人惊叹。</p>
-<p>To be continued!!!😂</p>
-          <div class="read-more">
-            <a href="/2018/03/23/00076半监督学习以及GAN的应用/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/03/22/000722M强制删除工具Geek-Uninstaller/">2M强制删除工具Geek Uninstaller</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-03-22
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/软件工具/">软件工具</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <p>介绍一个强力删除windows软件的小工具，只有2M大小。<a href="https://geekuninstaller.com/" target="_blank" rel="noopener">官方网址在此</a></p>
-<p>经测试，QQ拼音输入法还是不能完全删除，这锅得QQ来背。太流氓！！！不过这款软件还是很好用！</p>
-<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><ol>
-<li><a href="https://zhuanlan.zhihu.com/p/31299448" target="_blank" rel="noopener">2M强力“卸载神器”，从此对流氓软件说“不”</a></li>
-</ol>
-          <div class="read-more">
-            <a href="/2018/03/22/000722M强制删除工具Geek-Uninstaller/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/03/19/00075Jackie-Chan-成龙/">Jackie Chan 成龙</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-03-19
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/闲话桑麻/">闲话桑麻</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <p>想开篇来聊一聊成龙。</p>
-<p>读了这么多书，总想着写东西首先得规划怎么写，采用什么框架写，才不至于流水账形式。</p>
-<p>对于成龙来说，看着他的电影长大，喜欢李连杰的飘逸，可惜李连杰老了，再不复当年之勇，光环慢慢退却；而成龙，还时常活跃在视线中，他还是那个能打能给人带来欢乐的影人，虽然偶尔也发现他也是个六十多岁的老头了，但对他的欣赏仍旧没有改变，反倒随着时间的推移，越来越爱。为了了解他，特地去知乎上搜了：如何评价成龙？从众网友的文字中不难发现，大家都很爱成龙，他超越了同时代的其他影人，成为了旗帜，成了龙。</p>
-          <div class="read-more">
-            <a href="/2018/03/19/00075Jackie-Chan-成龙/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/03/16/00035一人之下/">一人之下</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-03-16
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/闲话桑麻/">闲话桑麻</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <p>国漫崛起时，最近被一部国漫《一人之下》实力圈粉，尤其喜欢剧内的各种方言配音，当然少不了各种人物角色歌曲，下面即是网易云的链接：</p>
-          <div class="read-more">
-            <a href="/2018/03/16/00035一人之下/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/01/16/00073faster-rcnn训练自己的数据/">faster_rcnn训练自己的数据</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-01-16
-        </span>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-
-        
-          <a id="more"></a>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/01/14/00054女朋友要带回家/">女朋友要带回家</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-01-14
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/琴棋书画/">琴棋书画</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <blockquote>
-<p>这是昨晚翻B站突然听到的很老的歌，谭杰希的《女朋友要带回家》，还是一个小女生唱的，以前自己玩尤克里里也唱过，那还是刚学那会，现在这么老，唱这么苏的歌有点不好意思唱了，所以每次尽量选择励志的歌来学习，学了好久，至今还是扫弦君。。。大半夜听这么苏的歌很想拿起吉他啊。。。</p>
-</blockquote>
-          <div class="read-more">
-            <a href="/2018/01/14/00054女朋友要带回家/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/01/07/00025RNN生成古诗/">RNN生成古诗</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-01-07
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/技术堆栈/">技术堆栈</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <blockquote>
-<p>利用RNN生成古诗，看看生成的样子。</p>
-</blockquote>
-<p>隐室令帆出水令，猎人宜道意初干。</p>
-<p>鸣波太众岚彩禁，易郭香鸣栈堕风。</p>
-<p>风竹出茏寒透匣，碧榛终乱异宫祠。</p>
-<p>迷坛金石人难到，骏退多候快逐连。</p>
-<p>千里战旗亭万匝，望烟川色耀光辉。</p>
-<p>异人不敢传秘著，形骸情无念太平。</p>
-          <div class="read-more">
-            <a href="/2018/01/07/00025RNN生成古诗/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/01/06/00056关于微博图床/">关于微博图床</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-01-06
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/闲话桑麻/">闲话桑麻</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <p>今天发现，上传到微博上的照片，即使客户端删除之后，服务器中还保存副本，链接依然有效，所以考虑到安全问题，有关个人信息的图片还是不要上传到微博上。</p>
-          <div class="read-more">
-            <a href="/2018/01/06/00056关于微博图床/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/01/04/00055金陵一梦/">金陵一梦</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-01-04
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/琴棋书画/">琴棋书画</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <blockquote>
-<p>金陵的第十个年头了，这些年没培养什么爱好，但一直想着做这个那个，摄影于是就成了一个遥不可及的梦想，但是没有啥拿得出手的作品，今天又下雪了，本想早早起床，趁着还没有人，拍几张，可。。。</p>
-</blockquote>
-          <div class="read-more">
-            <a href="/2018/01/04/00055金陵一梦/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/12/29/00051晚婚/">晚婚</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2017-12-29
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/音乐之声/">音乐之声</a>
-            
-          </div>
         
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <blockquote>
-<p>突然听到李宗盛的《晚婚》，感觉比江蕙的更好听，唱出了那种岁月沉淀，饱含沧桑。以前很喜欢李宗盛的歌，基本去KTV必点他的歌，这首歌也让我单曲循环了好久，此刻就在。</p>
-</blockquote>
-          <div class="read-more">
-            <a href="/2017/12/29/00051晚婚/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/12/22/00042摄影笔记手机摄影入门/">摄影笔记手机摄影入门</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2017-12-22
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/琴棋书画/">琴棋书画</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <blockquote>
-<p>这是摘选自摄影笔记的内容，在自己的博客中留存。</p>
-</blockquote>
-          <div class="read-more">
-            <a href="/2017/12/22/00042摄影笔记手机摄影入门/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/12/06/00002转月供是怎么回事/">月供是怎么回事</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2017-12-06
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/技术堆栈/">技术堆栈</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <blockquote>
-<p>买房、买车，人生大事，抛开全款，你了解月供几何？</p>
-</blockquote>
-          <div class="read-more">
-            <a href="/2017/12/06/00002转月供是怎么回事/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/12/05/00017转傅立叶白话分析/">转傅立叶白话分析</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2017-12-05
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/技术堆栈/">技术堆栈</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <blockquote>
-<p>本文以简明的语言向读者阐述了傅立叶分析的基本原理，适合入门。</p>
-</blockquote>
-          <div class="read-more">
-            <a href="/2017/12/05/00017转傅立叶白话分析/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/12/05/00018转从LeNet到DenseNet/">转从LeNet到DenseNet</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2017-12-05
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/技术堆栈/">技术堆栈</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <blockquote>
-<p>本文详细介绍了CNN各网络的发展史，值得一读。</p>
-</blockquote>
-          <div class="read-more">
-            <a href="/2017/12/05/00018转从LeNet到DenseNet/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/12/05/00045南京美食记/">南京美食记</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2017-12-05
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/闲话桑麻/">闲话桑麻</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <blockquote>
-<p>平时无聊，总想着去哪吃，会看到一些网友推荐，过后再想吃的时候又忘了，所以，特开此文广记南京美食，采取完成任务列表模式，当然，现在一家都没吃过，开篇啦！！！</p>
-</blockquote>
-          <div class="read-more">
-            <a href="/2017/12/05/00045南京美食记/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/12/04/00044牛排常识/">牛排常识</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2017-12-04
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/琴棋书画/">琴棋书画</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <blockquote>
-<p>常听别人说起某某某牛排，那么各种牛排的区别是什么，本博文假他人之手娓娓道来。</p>
-</blockquote>
-          <div class="read-more">
-            <a href="/2017/12/04/00044牛排常识/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/12/04/00068各种咖啡种类区别/">各种咖啡种类区别</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2017-12-04
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/琴棋书画/">琴棋书画</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <blockquote>
-<p>平时听说各种咖啡，还有各种区别，听起来头大，在此笔记。</p>
-</blockquote>
-          <div class="read-more">
-            <a href="/2017/12/04/00068各种咖啡种类区别/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-      
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2017/12/04/00059本地编辑markdown工具Typora/">本地编辑markdown工具Typora</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2017-12-04
-        </span>
-        
-          <div class="post-category">
-            
-              <a href="/categories/软件工具/">软件工具</a>
-            
-          </div>
-        
-        
-      </div>
-    </header>
-
-    
-    
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <blockquote>
-<p>推荐一个本地编辑markdown的工具，在各平台下都有版本。</p>
-</blockquote>
-<p>官方网址为：<a href="https://www.typora.io/" target="_blank" rel="noopener">Typora</a></p>
-          <div class="read-more">
-            <a href="/2017/12/04/00059本地编辑markdown工具Typora/" class="read-more-link">Read more..</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-    
-  </section>
-
-  
-  <nav class="pagination">
+  <nav class="post-nav">
     
     
-      <a class="next" href="/page/2/">
-        <span class="next-text">Next</span>
+      <a class="next" href="/2018/03/23/00077区块链/">
+        <span class="next-text nav-default">区块链</span>
+        <span class="prev-text nav-mobile">Next</span>
         <i class="iconfont icon-right"></i>
       </a>
     
   </nav>
 
+      </footer>
+    
+
+  </article>
+
 
           </div>
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
       </main>
@@ -1327,6 +384,8 @@
     </div>
 
     
+  
+
 
 
     
