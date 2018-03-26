@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="c++,protobuf,google," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文翻译自C++ Generated Code">
+<meta name="keywords" content="c++,protobuf,google">
+<meta property="og:type" content="article">
+<meta property="og:title" content="protobuf生成c++代码详解(初稿)">
+<meta property="og:url" content="http://gubangzhong.cn/2017/07/13/protobuf生成cplusplus代码详解/index.html">
+<meta property="og:site_name" content="Zeus&#39;">
+<meta property="og:description" content="本文翻译自C++ Generated Code">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-07-23T03:51:37.873Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="protobuf生成c++代码详解(初稿)">
+<meta name="twitter:description" content="本文翻译自C++ Generated Code">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://gubangzhong.cn/2017/07/13/protobuf生成cplusplus代码详解/"/>
+
+
+
+
+
+  <title>protobuf生成c++代码详解(初稿) | Zeus'</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zeus'</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://gubangzhong.cn/2017/07/13/protobuf生成cplusplus代码详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zeus">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zeus'">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">protobuf生成c++代码详解(初稿)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T16:49:50+08:00">
+                2017-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术堆栈/" itemprop="url" rel="index">
+                    <span itemprop="name">技术堆栈</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文翻译自<a href="https://developers.google.com/protocol-buffers/docs/reference/cpp-generated" target="_blank" rel="noopener">C++ Generated Code</a></p>
+</blockquote>
+<a id="more"></a>
+<p>本文描述了<code>protocol</code>缓冲编译器为指定的<code>protocol</code>定义生成的<code>C++</code>代码。<code>proto2</code>和<code>proto3</code>生成代码之间的任何区别都会突出显示。请注意，这些差异在生成代码中，而不在<code>base classes/interfaces</code>，这两个版本的<code>base classes/interfaces</code>都相同。在阅读本文档之前，您应该阅读proto2语言指南和/或proto3语言指南。</p>
+<h3 id="Compiler-Invocation"><a href="#Compiler-Invocation" class="headerlink" title="Compiler Invocation"></a>Compiler Invocation</h3><p><code>protocol</code>缓冲区编译器在使用<code>--cpp_out=</code>命令行时生成<code>C++</code>输出。该<code>--cpp_out=</code>选项的参数是编译器生成<code>C++</code>代码输出的目录。编译器为每个<code>.proto</code>文件输入创建头文件和实现文件。输出文件的名称通过获取<code>.proto</code>文件的名称并进行两次更改来实现：</p>
+<ul>
+<li>源文件扩展名<code>.proto</code>被替换为<code>.pb.h</code>或<code>.pb.cc</code>，即为头或实现文件。</li>
+<li><code>proto</code>路径（用<code>--proto_path=</code>或<code>-I</code>命令行标志指定）被输出路径（用<code>--cpp_out=</code>标志指定）替换。</li>
+</ul>
+<p>假设你调用编译器如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protoc --proto_path=src --cpp_out=build/gen src/foo.proto src/bar/baz.proto</span><br></pre></td></tr></table></figure>
+<p>编译器将读取这些文件<code>src/foo.proto</code>和<code>src/bar/baz.proto</code>，产生四个输出文件：<code>build/gen/foo.pb.h</code>，<code>build/gen/foo.pb.cc</code>，<code>build/gen/bar/baz.pb.h</code>，<code>build/gen/bar/baz.pb.cc</code>。编译器根据需要自动创建目录将<code>build/gen/bar</code>，但不会创建<code>build</code>或<code>build/gen</code>，它们必须已经存在（即需要自己创建）。</p>
+<h3 id="Packages"><a href="#Packages" class="headerlink" title="Packages"></a>Packages</h3><p>如果<code>.proto</code>文件包含一个<code>package</code>声明，则文件的全部内容将被放置在相应的<code>C++</code>命名空间中。例如，给出<code>package</code>声明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">package foo.bar;</span><br></pre></td></tr></table></figure>
+<p>文件中的所有声明将在<code>foo::bar</code>命名空间中。</p>
+<h3 id="Messages"><a href="#Messages" class="headerlink" title="Messages"></a>Messages</h3><p>给出一个简单的消息声明：<br><figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">message Foo &#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>protocol</code>缓冲区编译器生成一个由<code>google::protobuf::Message</code>公开派生的类<code>Foo</code>。这个类是一个具体的类，没有纯虚函数等待实现。根据优化模式，<code>Message</code>中的虚函数但不是纯虚函数可以被<code>Foo</code>覆盖也可以不被覆盖。默认情况下，<code>Foo</code>以最大速度实现所有函数的专门版本。但是，如果<code>.proto</code>文件包含该行：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">option</span> optimize_for = CODE_SIZE;</span><br></pre></td></tr></table></figure>
+<p>那么<code>Foo</code>将仅覆盖功能所需的最小的一组方法，并依赖其余的基于反射的实现。这显著减少了生成的代码，但也降低了性能。或者，如果<code>.proto</code>文件包含：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">option</span> optimize_for = LITE_RUNTIME;</span><br></pre></td></tr></table></figure>
+<p>那么<code>Foo</code>将包括所有方法的快速实现，将实现该<code>google::protobuf::MessageLite</code>接口，该接口只包含<code>Message</code>方法的子集。特别地，它不支持描述符或映射。但是，在这种模式下，生成的代码只需要链接<code>libprotobuf-lite.so</code>（<code>libprotobuf-lite.lib</code>在<code>Windows</code>上），而不是<code>libprotobuf.so</code>（<code>libprotobuf.lib</code>）。<code>lite</code>库比完整的库小得多，更适合资源有限的系统，如手机。</p>
+<p>你不能创建自己的<code>Foo</code>子类。如果您将此类子类化并覆盖虚函数，则覆盖可能会被忽略，因为许多生成的方法调用都将被去虚拟化以提高性能。</p>
+<p><code>Message</code>接口定义了检查、处理、读取或写入整个<code>message</code>的方法，包括解析和序列化到二进制字符串。除了这些方法，<code>Foo</code>类还定义了以下方法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Foo()：默认构造函数。</span><br><span class="line">~Foo()：默认析构函数。</span><br><span class="line">Foo(<span class="keyword">const</span> Foo&amp; other)：拷贝构造函数。</span><br><span class="line">Foo&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Foo&amp; other)：赋值运算。</span><br><span class="line"><span class="keyword">void</span> Swap(Foo* other)：用另一个消息交换内容。</span><br><span class="line"><span class="keyword">const</span> UnknownFieldSet&amp; unknown_fields() <span class="keyword">const</span>：返回解析此消息时遇到的一组未知字段。</span><br><span class="line">UnknownFieldSet* mutable_unknown_fields()：返回指向解析此消息时遇到的未知字段的可变集的指针。</span><br></pre></td></tr></table></figure>
+<p>该类还定义了以下静态方法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">const</span> Descriptor* <span class="title">descriptor</span><span class="params">()</span></span></span><br><span class="line">- 返回类型的描述符。这包含有关类型的信息，包括它的字段和它们的类型。这可以用映射以编程方式检查字段。</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">const</span> Foo&amp; <span class="title">default_instance</span><span class="params">()</span></span></span><br><span class="line">- 返回一个const单例实例Foo与新构造的实例相同Foo（所有单个字段未设置，所有重复字段都为空）。请注意，消息的默认实例可以被用作工厂通过调用其New()方法。</span><br></pre></td></tr></table></figure>
+<p><code>message</code>可以在另一个<code>message</code>中声明。例如：<br><figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">message Foo &#123; message Bar &#123; &#125; &#125;</span><br></pre></td></tr></table></figure></p>
+<p>在这种情况下，编译器生成两个类：<code>Foo</code>和<code>Foo_Bar</code>。另外，编译器会在<code>Foo</code>类下生成一个<code>typedef</code> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> Foo_Bar Bar;</span><br></pre></td></tr></table></figure>
+<p>这意味着您可以使用嵌套类型的类，就像它是嵌套类<code>Foo::Bar</code>一样。但是，请注意，<code>C++</code>不允许向前声明嵌套类型。如果要在另一个文件中转发声明并使用该声明，则必须将其标识为<code>Foo_Bar</code>。</p>
+<h3 id="Fields"><a href="#Fields" class="headerlink" title="Fields"></a>Fields</h3><p>除了上一节中描述的方法之外，<code>protocol</code>缓冲区编译器为<code>.proto</code>文件中的消息中定义的每个字段生成一组访问方法。</p>
+<p>除了访问器方法之外，编译器还会为包含其字段编号的每个字段生成一个整数常量。常数名称是字母<code>k</code>，后跟字段名称转换为驼峰法，后跟<code>FieldNumber</code>。例如，给定该字段<code>optional int32 foo_bar = 5;</code>;编译器将生成常量<code>static const int kFooBarFieldNumber = 5;</code>。</p>
+<p>对于返回<code>const</code>引用的字段访问器，当对消息进行下一个修改访问时，该引用可能会无效。这包括调用任何<code>const</code>字段的任何非访问者，通过其他方法（例如，使用该消息作为参数）调用<code>const</code>继承<code>Message</code>或修改消息的任何非方法<code>Swap()</code>。相应地，如果在此期间没有对消息进行任何修改访问，返回引用的地址只能在访问器的不同调用中保持相同。</p>
+<p>对于返回指针的字段访问器，当对消息进行下一个修改或不修改访问时，该指针可能无效。这包括，不管<code>const</code>是什么，调用任何字段的任何访问者，<code>Message</code>通过其他方式调用继承或访问消息的任何方法（例如，通过使用复制构造函数复制消息）。相应地，返回的指针的值不能保证在访问器的两个不同调用中是相同的。</p>
+<h4 id="Singular-Numeric-Fields-proto2"><a href="#Singular-Numeric-Fields-proto2" class="headerlink" title="Singular Numeric Fields (proto2)"></a>Singular Numeric Fields (proto2)</h4><p>对于任一这些字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">optional</span> <span class="built_in">int32</span> foo = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">required</span> <span class="built_in">int32</span> foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bool has_foo() const：返回true是否设置了该字段。</span><br><span class="line">int32 foo() const：返回字段的当前值。如果未设置该字段，则返回默认值。</span><br><span class="line">void set_foo(int32 value)：设置字段的值。调用后，has_foo()将返回true并foo()返回value。</span><br><span class="line">void clear_foo()：清除字段的值。调用它后，has_foo()将返回false并foo()返回默认值。</span><br></pre></td></tr></table></figure>
+<p>对于其他数字字段类型（包括<code>bool</code>），<code>int32</code>将根据标量值类型表替换为相应的<code>C++</code>类型。</p>
+<h4 id="Singular-Numeric-Fields-proto3"><a href="#Singular-Numeric-Fields-proto3" class="headerlink" title="Singular Numeric Fields (proto3)"></a>Singular Numeric Fields (proto3)</h4><p>对于此字段定义：<br><figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int32</span> foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
+<p>编译器将生成以下访问器方法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int32 foo() const：返回字段的当前值。如果未设置该字段，则返回0。</span><br><span class="line">void set_foo(int32 value)：设置字段的值。调用后，foo()会返回value。</span><br><span class="line">void clear_foo()：清除字段的值。调用这个之后，foo()会返回0。</span><br></pre></td></tr></table></figure>
+<p>对于其他数字字段类型（包括<code>bool</code>），<code>int32</code>将根据标量值类型表替换为相应的<code>C++</code>类型。</p>
+<h4 id="Singular-String-Fields-proto2"><a href="#Singular-String-Fields-proto2" class="headerlink" title="Singular String Fields (proto2)"></a>Singular String Fields (proto2)</h4><p>对于任何这些字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">optional</span> <span class="built_in">string</span> foo = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">required</span> <span class="built_in">string</span> foo = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">optional</span> <span class="built_in">bytes</span> foo = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">required</span> <span class="built_in">bytes</span> foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">bool has_foo() const：</span><br><span class="line">返回<span class="literal">true</span>是否设置了该字段。</span><br><span class="line"></span><br><span class="line">const string&amp; foo() const：</span><br><span class="line">返回字段的当前值。如果未设置该字段，则返回默认值。</span><br><span class="line"></span><br><span class="line">void set_foo(const string&amp; value)：</span><br><span class="line">设置字段的值。调用后，has_foo()将返回<span class="literal">true</span>并foo()返回一份value。</span><br><span class="line"></span><br><span class="line">void set_foo(const char* value)：</span><br><span class="line">使用C风格的以null结尾的字符串设置字段的值。调用后，has_foo()将返回<span class="literal">true</span>并foo()返回一份value。</span><br><span class="line"></span><br><span class="line">void set_foo(const char* value, int size)：</span><br><span class="line">像上面一样，但是字符串大小是明确给出的，而不是通过寻找一个空终止符字节来确定。</span><br><span class="line"></span><br><span class="line">string* mutable_foo()：</span><br><span class="line">返回指向可变<span class="built_in">string</span>对象的指针，该对象存储字段的值。如果在调用之前未设置该字段，则返回的字符串将为空（而不是默认值）。调用它后，has_foo()将返回<span class="literal">true</span>并foo()返回任何写入给定字符串的值。</span><br><span class="line"></span><br><span class="line">void clear_foo()：清除字段的值。调用它后，has_foo()将返回false并foo()返回默认值。</span><br><span class="line"></span><br><span class="line">void set_allocated_foo(string* value)：</span><br><span class="line">将<span class="built_in">string</span>对象设置为字段，并释放前一个字段值（如果存在）。如果<span class="built_in">string</span>指针不是<span class="literal">NULL</span>，消息将获取所分配的<span class="built_in">string</span>对象的所有权并has_foo()返回<span class="literal">true</span>。否则，如果value是<span class="literal">NULL</span>，行为与调用相同clear_foo()。</span><br><span class="line"></span><br><span class="line">string* release_foo()：</span><br><span class="line">释放字段的所有权并返回<span class="built_in">string</span>对象的指针。调用该<span class="built_in">string</span>函数后，调用者将获取已分配对象的所有权，has_foo()将返回<span class="literal">false</span>，并foo()返回默认值。</span><br></pre></td></tr></table></figure>
+<h4 id="Singular-String-Fields-proto3"><a href="#Singular-String-Fields-proto3" class="headerlink" title="Singular String Fields (proto3)"></a>Singular String Fields (proto3)</h4><p>对于任何这些字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> foo = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">bytes</span> foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const string&amp; foo() const：返回字段的当前值。如果未设置该字段，则返回空字符串/空字节。</span><br><span class="line"></span><br><span class="line">void set_foo(const string&amp; value)：设置字段的值。调用后，foo()会返回一份value。</span><br><span class="line"></span><br><span class="line">void set_foo(const char* value)：</span><br><span class="line">使用C风格的以null结尾的字符串设置字段的值。调用后，foo()会返回一份value。</span><br><span class="line"></span><br><span class="line">void set_foo(const char* value, int size)：</span><br><span class="line">像上面一样，但是字符串大小是明确给出的，而不是通过寻找一个空终止符字节来确定。</span><br><span class="line"></span><br><span class="line">string* mutable_foo()：</span><br><span class="line">返回指向可变<span class="built_in">string</span>对象的指针，该对象存储字段的值。如果在调用之前未设置该字段，则返回的字符串将为空。调用它之后，foo()将返回写入给定字符串的任何值。</span><br><span class="line"></span><br><span class="line">void clear_foo()：清除字段的值。</span><br><span class="line">调用这个之后，foo()将返回空字符串/空字节。</span><br><span class="line"></span><br><span class="line">void set_allocated_foo(string* value)：</span><br><span class="line">将<span class="built_in">string</span>对象设置为字段，并释放前一个字段值（如果存在）。如果<span class="built_in">string</span>指针不是<span class="literal">NULL</span>，该消息将占用所分配<span class="built_in">string</span>对象的所有权。否则，如果value是<span class="literal">NULL</span>，行为与调用相同clear_foo()。</span><br><span class="line"></span><br><span class="line">string* release_foo()：</span><br><span class="line">释放字段的所有权并返回<span class="built_in">string</span>对象的指针。调用该方法后，调用者将获取已分配<span class="built_in">string</span>对象的所有权，并foo()返回空字符串/空字节。</span><br></pre></td></tr></table></figure>
+<h4 id="Singular-Enum-Fields-proto2"><a href="#Singular-Enum-Fields-proto2" class="headerlink" title="Singular Enum Fields (proto2)"></a>Singular Enum Fields (proto2)</h4><p>给定枚举类型：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">enum Bar &#123;</span><br><span class="line">  BAR_VALUE = 0;</span><br><span class="line">  OTHER_VALUE = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于任一这些字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">optional</span> Bar foo = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">required</span> Bar foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bool has_foo() const：返回true是否设置了该字段。</span><br><span class="line"></span><br><span class="line">Bar foo() const：返回字段的当前值。如果未设置该字段，则返回默认值。</span><br><span class="line"></span><br><span class="line">void set_foo(Bar value)：设置字段的值。</span><br><span class="line">调用后，has_foo()将返回<span class="literal">true</span>并foo()返回value。在调试模式（即NDEBUG未定义）中，如果value与定义的任何值不匹配Bar，则此方法将中止该过程。</span><br><span class="line"></span><br><span class="line">void clear_foo()：清除字段的值。调用它后，has_foo()将返回false并foo()返回默认值。</span><br></pre></td></tr></table></figure>
+<h4 id="Singular-Enum-Fields-proto3"><a href="#Singular-Enum-Fields-proto3" class="headerlink" title="Singular Enum Fields (proto3)"></a>Singular Enum Fields (proto3)</h4><p>给定枚举类型：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">enum Bar &#123;</span><br><span class="line">  BAR_VALUE = 0;</span><br><span class="line">  OTHER_VALUE = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于此字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Bar foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Bar foo() const：返回字段的当前值。如果未设置该字段，则返回默认值（0）。</span><br><span class="line"></span><br><span class="line">void set_foo(Bar value)：设置字段的值。打电话后，foo()会返回value。</span><br><span class="line"></span><br><span class="line">void clear_foo()：清除字段的值。调用该命令后，foo()将返回默认值。</span><br></pre></td></tr></table></figure></p>
+<h4 id="Singular-Embedded-Message-Fields"><a href="#Singular-Embedded-Message-Fields" class="headerlink" title="Singular Embedded Message Fields"></a>Singular Embedded Message Fields</h4><p>给定消息类型：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">message Bar &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>对于任何这些字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//proto2</span></span><br><span class="line"><span class="keyword">optional</span> Bar foo = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">required</span> Bar foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//proto3</span></span><br><span class="line">Bar foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">bool has_foo() const：返回true是否设置了该字段。</span><br><span class="line"></span><br><span class="line">const Bar&amp; foo() const：</span><br><span class="line">返回字段的当前值。如果未设置该字段，则返回一个不设置Bar其字段（可能Bar::default_instance()）的字段。</span><br><span class="line"></span><br><span class="line">Bar* mutable_foo()：</span><br><span class="line">返回指向可变Bar对象的指针，该对象存储字段的值。如果在调用之前没有设置该字段，则返回Bar的字段将不会设置任何字段（即它将与新分配的相同Bar）。调用这个之后，has_foo()将返回<span class="literal">true</span>并foo()返回对同一个实例的引用Bar。</span><br><span class="line"></span><br><span class="line">void clear_foo()：</span><br><span class="line">清除字段的值。调用它后，has_foo()将返回<span class="literal">false</span>并foo()返回默认值。</span><br><span class="line"></span><br><span class="line">void set_allocated_foo(Bar* bar)：</span><br><span class="line">将Bar对象设置为字段，并释放前一个字段值（如果存在）。如果Bar指针不是<span class="literal">NULL</span>，消息将获取所分配的Bar对象的所有权并has_foo()返回<span class="literal">true</span>。否则，如果Bar是<span class="literal">NULL</span>，行为与调用相同clear_foo()。</span><br><span class="line"></span><br><span class="line">Bar* release_foo()：</span><br><span class="line">释放字段的所有权并返回Bar对象的指针。调用该Bar函数后，调用者将获取已分配对象的所有权，has_foo()将返回<span class="literal">false</span>，并foo()返回默认值。</span><br></pre></td></tr></table></figure></p>
+<h4 id="Repeated-Numeric-Fields"><a href="#Repeated-Numeric-Fields" class="headerlink" title="Repeated Numeric Fields"></a>Repeated Numeric Fields</h4><p>对于此字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">repeated</span> <span class="built_in">int32</span> foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int foo_size() const：返回字段中当前的元素数。</span><br><span class="line"></span><br><span class="line">int32 foo(int index) const：返回给定基于零的索引的元素。使用[0，foo_size（））之外的索引调用此方法会产生未定义的行为。</span><br><span class="line"></span><br><span class="line">void set_foo(int index, int32 value)：设置给定基于零的索引的元素的值。</span><br><span class="line"></span><br><span class="line">void add_foo(int32 value)：用给定的值追加一个新元素到该字段。</span><br><span class="line"></span><br><span class="line">void clear_foo()：</span><br><span class="line">从字段中删除所有元素。调用后，foo_size()将返回零。</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> RepeatedField&lt;int32&gt;&amp; foo() <span class="keyword">const</span>：</span><br><span class="line">返回RepeatedField存储字段元素的底层。这个容器类提供了类似STL的迭代器和其他方法。</span><br><span class="line"></span><br><span class="line">RepeatedField&lt;int32&gt;* mutable_foo()：</span><br><span class="line">返回指向RepeatedField存储字段元素的底层<span class="keyword">mutable</span>的指针。这个容器类提供了类似STL的迭代器和其他方法。对于其他数字字段类型（包括<span class="keyword">bool</span>），int32将根据标量值类型表替换为相应的C ++类型。</span><br></pre></td></tr></table></figure></p>
+<h4 id="Repeated-String-Fields"><a href="#Repeated-String-Fields" class="headerlink" title="Repeated String Fields"></a>Repeated String Fields</h4><p>对于任一这些字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">repeated</span> <span class="built_in">string</span> foo = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">repeated</span> <span class="built_in">bytes</span> foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">int foo_size() const：返回字段中当前的元素数。</span><br><span class="line"></span><br><span class="line">const string&amp; foo(int index) const：返回给定基于零的索引的元素。使用[0，foo_size（））之外的索引调用此方法会产生未定义的行为。</span><br><span class="line"></span><br><span class="line">void set_foo(int index, const string&amp; value)：设置给定基于零的索引的元素的值。</span><br><span class="line"></span><br><span class="line">void set_foo(int index, const char* value)：使用C风格的以null结尾的字符串来设置给定基于零的索引处的元素的值。</span><br><span class="line"></span><br><span class="line">void set_foo(int index, const char* value, int size)：像上面一样，但是字符串大小是明确给出的，而不是通过寻找一个空终止符字节来确定。</span><br><span class="line"></span><br><span class="line">string* mutable_foo(int index)：返回一个指向可变string对象的指针，该对象在给定的基于零的索引处存储元素的值。使用[0，foo_size（））之外的索引调用此方法会产生未定义的行为。</span><br><span class="line"></span><br><span class="line">void add_foo(const string&amp; value)：用给定的值追加一个新元素到该字段。</span><br><span class="line"></span><br><span class="line">void add_foo(const char* value)：使用C风格的以null结尾的字符串向字段添加一个新元素。</span><br><span class="line"></span><br><span class="line">void add_foo(const char* value, int size)：像上面一样，但是字符串大小是明确给出的，而不是通过寻找一个空终止符字节来确定。</span><br><span class="line"></span><br><span class="line">string* add_foo()：添加一个新的空字符串元素并返回一个指针。</span><br><span class="line"></span><br><span class="line">void clear_foo()：从字段中删除所有元素。调用后，foo_size()将返回零。</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> RepeatedPtrField&lt;<span class="built_in">string</span>&gt;&amp; foo() <span class="keyword">const</span>：返回RepeatedPtrField存储字段元素的底层。这个容器类提供了类似STL的迭代器和其他方法。</span><br><span class="line"></span><br><span class="line">RepeatedPtrField&lt;<span class="built_in">string</span>&gt;* mutable_foo()：返回指向RepeatedPtrField存储字段元素的底层<span class="keyword">mutable</span>的指针。这个容器类提供了类似STL的迭代器和其他方法。</span><br></pre></td></tr></table></figure></p>
+<h4 id="Repeated-Enum-Fields"><a href="#Repeated-Enum-Fields" class="headerlink" title="Repeated Enum Fields"></a>Repeated Enum Fields</h4><p>给定枚举类型：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">enum Bar &#123;</span><br><span class="line">  BAR_VALUE = 0;</span><br><span class="line">  OTHER_VALUE = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于此字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">repeated</span> Bar foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int foo_size() const：返回字段中当前的元素数。</span><br><span class="line"></span><br><span class="line">Bar foo(int index) const：返回给定基于零的索引的元素。使用[0，foo_size（））之外的索引调用此方法会产生未定义的行为。</span><br><span class="line"></span><br><span class="line">void set_foo(int index, Bar value)：设置给定基于零的索引的元素的值。在调试模式（即NDEBUG未定义）中，如果value与定义的任何值不匹配Bar，则此方法将中止该过程。</span><br><span class="line"></span><br><span class="line">void add_foo(Bar value)：用给定的值追加一个新元素到该字段。在调试模式（即NDEBUG未定义）中，如果value与定义的任何值不匹配Bar，则此方法将中止该过程。</span><br><span class="line"></span><br><span class="line">void clear_foo()：从字段中删除所有元素。调用后，foo_size()将返回零。</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> RepeatedField&lt;<span class="keyword">int</span>&gt;&amp; foo() <span class="keyword">const</span>：返回RepeatedField存储字段元素的底层。这个容器类提供了类似STL的迭代器和其他方法。</span><br><span class="line"></span><br><span class="line">RepeatedField&lt;<span class="keyword">int</span>&gt;* mutable_foo()：返回指向RepeatedField存储字段元素的底层<span class="keyword">mutable</span>的指针。这个容器类提供了类似STL的迭代器和其他方法。</span><br></pre></td></tr></table></figure></p>
+<h4 id="Repeated-Embedded-Message-Fields"><a href="#Repeated-Embedded-Message-Fields" class="headerlink" title="Repeated Embedded Message Fields"></a>Repeated Embedded Message Fields</h4><p>给定消息类型：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">message Bar &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>对于此字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">repeated</span> Bar foo = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int foo_size() const：返回字段中当前的元素数。</span><br><span class="line"></span><br><span class="line">const Bar&amp; foo(int index) const：返回给定基于零的索引的元素。使用[0，foo_size（））之外的索引调用此方法会产生未定义的行为。</span><br><span class="line"></span><br><span class="line">Bar* mutable_foo(int index)：返回一个指向可变Bar对象的指针，该对象在给定的基于零的索引处存储元素的值。使用[0，foo_size（））之外的索引调用此方法会产生未定义的行为。</span><br><span class="line"></span><br><span class="line">Bar* add_foo()：添加一个新元素并返回一个指针。返回的Bar将不会设置任何字段（即它将与新分配的相同Bar）。</span><br><span class="line"></span><br><span class="line">void clear_foo()：从字段中删除所有元素。调用后，foo_size()将返回零。</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> RepeatedPtrField&lt;Bar&gt;&amp; foo() <span class="keyword">const</span>：返回RepeatedPtrField存储字段元素的底层。这个容器类提供了类似STL的迭代器和其他方法。</span><br><span class="line"></span><br><span class="line">RepeatedPtrField&lt;Bar&gt;* mutable_foo()：返回指向RepeatedPtrField存储字段元素的底层<span class="keyword">mutable</span>的指针。这个容器类提供了类似STL的迭代器和其他方法。</span><br></pre></td></tr></table></figure>
+<h4 id="Oneof-Numeric-Fields"><a href="#Oneof-Numeric-Fields" class="headerlink" title="Oneof Numeric Fields"></a>Oneof Numeric Fields</h4><p>对于这个oneof字段定义：<br><figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">oneof_name &#123;</span><br><span class="line">    <span class="built_in">int32</span> foo = <span class="number">1</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>编译器将生成以下访问器方法：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bool has_foo() const（仅限于proto2）：true如果一个情况下返回kFoo。</span><br><span class="line"></span><br><span class="line">int32 foo() const：如果是一个case，则返回该字段的当前值kFoo。否则返回默认值。</span><br><span class="line"></span><br><span class="line">void set_foo(int32 value)：</span><br><span class="line">- 如果设置了同一个任何一个字段，则调用clear_oneof_name()。</span><br><span class="line">- 设置此字段的值，并将其中的一个设置为kFoo。</span><br><span class="line">- has_foo()（仅原型<span class="number">2</span>）将返回<span class="literal">true</span>，foo()将返回value，并oneof_name_case()返回kFoo。</span><br><span class="line"></span><br><span class="line">void clear_foo()：</span><br><span class="line">- 如果不是，情况不会改变kFoo。</span><br><span class="line">- 如果一个情况是kFoo，清除字段的值和一个<span class="keyword">case</span>。has_foo()（仅限proto2）将返回<span class="literal">false</span>，foo()将返回默认值并oneof_name_case()返回ONEOF_NAME_NOT_SET。</span><br></pre></td></tr></table></figure></p>
+<p>对于其他数字字段类型（包括bool）， int32将根据标量值类型表替换为相应的C ++类型。</p>
+<h4 id="Oneof-String-Fields"><a href="#Oneof-String-Fields" class="headerlink" title="Oneof String Fields"></a>Oneof String Fields</h4><p>对于任何这些oneof字段定义：<br><figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">oneof_name &#123;</span><br><span class="line">    <span class="built_in">string</span> foo = <span class="number">1</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">oneof_name &#123;</span><br><span class="line">    <span class="built_in">bytes</span> foo = <span class="number">1</span>;</span><br><span class="line">    ...。</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>编译器将生成以下访问器方法：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">bool has_foo() const（仅限于proto2）：true如果一个情况下返回kFoo。</span><br><span class="line"></span><br><span class="line">const string&amp; foo() const：如果一种情况，则返回该字段的当前值kFoo。否则返回默认值。</span><br><span class="line"></span><br><span class="line">void set_foo(const string&amp; value)：</span><br><span class="line">- 如果设置了同一个任何一个字段，则调用clear_oneof_name()。</span><br><span class="line">- 设置此字段的值，并将其中的一个设置为kFoo。</span><br><span class="line">- has_foo()（仅原始<span class="number">2</span>）将返回<span class="literal">true</span>，foo()将返回value并oneof_name_case()返回kFoo。</span><br><span class="line"></span><br><span class="line">void set_foo(const char* value)：</span><br><span class="line">- 如果设置了同一个任何一个字段，则调用clear_oneof_name()。</span><br><span class="line">- 使用C风格的空值终止的字符串设置字段的值，并将其中的一个设置为kFoo。</span><br><span class="line">- has_foo()（仅原始<span class="number">2</span>）将返回<span class="literal">true</span>，foo()将返回value并oneof_name_case()返回kFoo。</span><br><span class="line"></span><br><span class="line">void set_foo(const char* value, int size)：</span><br><span class="line">像上面一样，但是字符串大小是明确给出的，而不是通过寻找一个空终止符字节来确定。</span><br><span class="line"></span><br><span class="line">string* mutable_foo()：</span><br><span class="line">- 如果设置了同一个任何一个字段，则调用clear_oneof_name()。</span><br><span class="line">- kFoo将一个<span class="keyword">case</span>设置为并返回一个指向可变字符串对象的指针，该对象存储字段的值。如果一个情况不在kFoo调用之前，则返回的字符串将为空（而不是默认值）。</span><br><span class="line">- has_foo()（仅原型<span class="number">2</span>）将返回<span class="literal">true</span>，foo()将返回任何写入给定字符串的值，oneof_name_case()并返回kFoo。</span><br><span class="line"></span><br><span class="line">void clear_foo()：</span><br><span class="line">- 如果一个案件不是kFoo，任何事情都不会改变。</span><br><span class="line">- 如果一个案例是kFoo，释放字段并清除一个<span class="keyword">case</span>。has_foo()（仅原型<span class="number">2</span>）将返回<span class="literal">false</span>，foo()将返回默认值，并oneof_name_case()返回ONEOF_NAME_NOT_SET。</span><br><span class="line"></span><br><span class="line">void set_allocated_foo(string* value)：</span><br><span class="line">- 电话clear_oneof_name()。</span><br><span class="line">- 如果字符串指针不是<span class="literal">NULL</span>：将字符串对象设置为字段并将其设置为一个kFoo。该消息将获取已分配的字符串对象的所有权，has_foo()（仅原型<span class="number">2</span>）将返回<span class="literal">true</span>并oneof_name_case()返回kFoo。</span><br><span class="line">- 如果字符串指针是<span class="literal">NULL</span>，has_foo()（仅原型<span class="number">2</span>）将返回<span class="literal">false</span>并oneof_name_case()返回ONEOF_NAME_NOT_SET。</span><br><span class="line"></span><br><span class="line">string* release_foo()：</span><br><span class="line">- <span class="literal">NULL</span>如果一个情况不是返回kFoo。</span><br><span class="line">- 清除一个情况，释放该字段的所有权并返回字符串对象的指针。调用这个之后，调用者占用所分配的字符串对象，has_foo()（仅原型<span class="number">2</span>）将返回<span class="literal">false</span>，foo()将返回默认值，并oneof_name_case()返回ONEOF_NAME_NOT_SET。</span><br></pre></td></tr></table></figure></p>
+<h4 id="Oneof-Enum-Fields"><a href="#Oneof-Enum-Fields" class="headerlink" title="Oneof Enum Fields"></a>Oneof Enum Fields</h4><p>给定枚举类型：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">enum Bar &#123;</span><br><span class="line">  BAR_VALUE = 0;</span><br><span class="line">  OTHER_VALUE = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于oneof字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">oneof oneof_name &#123;</span><br><span class="line">    Bar foo = <span class="number">1</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">bool has_foo() const（仅限于proto2）：true如果一个情况下返回kFoo。</span><br><span class="line"></span><br><span class="line">Bar foo() const：如果是一个case，则返回该字段的当前值kFoo。否则返回默认值。</span><br><span class="line"></span><br><span class="line">void set_foo(Bar value)：</span><br><span class="line">- 如果设置了同一个任何一个字段，则调用clear_oneof_name()。</span><br><span class="line">- 设置此字段的值，并将其中的一个设置为kFoo。</span><br><span class="line">- has_foo()（仅原型<span class="number">2</span>）将返回<span class="literal">true</span>，foo()将返回value并oneof_name_case()返回kFoo。</span><br><span class="line">- 在调试模式（即NDEBUG未定义）中，如果value与定义的任何值不匹配Bar，则此方法将中止该过程。</span><br><span class="line"></span><br><span class="line">void clear_foo()：</span><br><span class="line">- 如果一个案件不是，任何事情都不会改变kFoo。</span><br><span class="line">- 如果一个案例是kFoo，清除字段的值和一个<span class="keyword">case</span>。has_foo()（仅限proto2）将返回<span class="literal">false</span>，foo()将返回默认值并oneof_name_case()返回ONEOF_NAME_NOT_SET。</span><br></pre></td></tr></table></figure>
+<h4 id="Oneof-Embedded-Message-Fields"><a href="#Oneof-Embedded-Message-Fields" class="headerlink" title="Oneof Embedded Message Fields"></a>Oneof Embedded Message Fields</h4><p>给定消息类型：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">message Bar &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>对于oneof字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">oneof oneof_name &#123;</span><br><span class="line">    Bar foo = <span class="number">1</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">bool has_foo() const：如果一个case返回true kFoo。</span><br><span class="line"></span><br><span class="line">const Bar&amp; foo() const：如果是一个case，则返回该字段的当前值kFoo。否则返回Bar::default_instance()。</span><br><span class="line"></span><br><span class="line">Bar* mutable_foo()：</span><br><span class="line">- 如果设置了同一个任何一个字段，则调用clear_oneof_name()。</span><br><span class="line">- kFoo将一个情况设置为并返回一个指向可变的Bar对象的指针，该对象存储该字段的值。如果一个情况不在kFoo调用之前，则返回的栏将不会设置任何字段（即它将与新分配的Bar相同）。</span><br><span class="line">- 调用这个之后，has_foo()会返回<span class="literal">true</span>，foo()将返回一个引用到同一个实例Bar并oneof_name_case()返回kFoo。</span><br><span class="line"></span><br><span class="line">void clear_foo()：</span><br><span class="line">- 如果一个案件不是，任何事情都不会改变kFoo。</span><br><span class="line">- 如果一个情况相等kFoo，则释放该字段并清除该情况。has_foo()将返回<span class="literal">false</span>，foo()将返回默认值并oneof_name_case()返回ONEOF_NAME_NOT_SET。</span><br><span class="line"></span><br><span class="line">void set_allocated_foo(Bar* bar)：</span><br><span class="line">- 电话clear_oneof_name()。</span><br><span class="line">- 如果Bar指针不是<span class="literal">NULL</span>：将Bar对象设置为字段并将其设置为一个kFoo。该消息占用所分配的Bar对象，has_foo（）将返回<span class="literal">true</span>，而oneof_name_case（）将返回kFoo。</span><br><span class="line">- 如果指针是<span class="literal">NULL</span>，has_foo()将返回<span class="literal">false</span>并oneof_name_case()返回ONEOF_NAME_NOT_SET。（行为就像调用clear_oneof_name()）</span><br><span class="line"></span><br><span class="line">Bar* release_foo()：</span><br><span class="line">- <span class="literal">NULL</span>如果一个情况不是返回kFoo。</span><br><span class="line">- 如果一种情况是kFoo，清除一种情况，释放该字段的所有权并返回该Bar对象的指针。调用这个之后，调用者占用所分配的Bar对象，has_foo()将返回<span class="literal">false</span>，foo()将返回默认值并oneof_name_case()返回ONEOF_NAME_NOT_SET。</span><br></pre></td></tr></table></figure></p>
+<h4 id="Map-Fields"><a href="#Map-Fields" class="headerlink" title="Map Fields"></a>Map Fields</h4><p>对于此Map字段定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map&lt;<span class="built_in">int32</span>, <span class="built_in">int32</span>&gt; weight = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下访问器方法：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> google::protobuf::Map&lt;int32, int32&gt;&amp; weight();：返回一个不可变的Map。</span><br><span class="line">google::protobuf::Map&lt;int32, int32&gt;* mutable_weight();：返回一个可变的Map。</span><br></pre></td></tr></table></figure></p>
+<p>一个<code>google::protobuf::Map</code>是用于存储映射字段的协议缓冲区中使用的特殊容器类型。从下面的界面可以看出，它使用常用的子集<code>std::map</code>和<code>std::unordered_map</code>方法。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Key, <span class="keyword">typename</span> T&gt; &#123;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Map</span> &#123;</span></span><br><span class="line">  <span class="comment">// Member types</span></span><br><span class="line">  <span class="keyword">typedef</span> Key key_type;</span><br><span class="line">  <span class="keyword">typedef</span> T mapped_type;</span><br><span class="line">  <span class="keyword">typedef</span> ... value_type;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Iterators</span></span><br><span class="line">  <span class="function">iterator <span class="title">begin</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function">const_iterator <span class="title">begin</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="function">const_iterator <span class="title">cbegin</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="function">iterator <span class="title">end</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function">const_iterator <span class="title">end</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="function">const_iterator <span class="title">cend</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="comment">// Capacity</span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">empty</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Element access</span></span><br><span class="line">  T&amp; <span class="keyword">operator</span>[](<span class="keyword">const</span> Key&amp; key);</span><br><span class="line">  <span class="function"><span class="keyword">const</span> T&amp; <span class="title">at</span><span class="params">(<span class="keyword">const</span> Key&amp; key)</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="function">T&amp; <span class="title">at</span><span class="params">(<span class="keyword">const</span> Key&amp; key)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Lookup</span></span><br><span class="line">  <span class="function"><span class="keyword">int</span> <span class="title">count</span><span class="params">(<span class="keyword">const</span> Key&amp; key)</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="function">const_iterator <span class="title">find</span><span class="params">(<span class="keyword">const</span> Key&amp; key)</span> <span class="keyword">const</span></span>;</span><br><span class="line">  <span class="function">iterator <span class="title">find</span><span class="params">(<span class="keyword">const</span> Key&amp; key)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Modifiers</span></span><br><span class="line">  pair&lt;iterator, <span class="keyword">bool</span>&gt; insert(<span class="keyword">const</span> value_type&amp; value);</span><br><span class="line">  <span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">InputIt</span>&gt;</span></span><br><span class="line"><span class="class">  <span class="title">void</span> <span class="title">insert</span>(<span class="title">InputIt</span> <span class="title">first</span>, <span class="title">InputIt</span> <span class="title">last</span>);</span></span><br><span class="line">  <span class="function">size_type <span class="title">erase</span><span class="params">(<span class="keyword">const</span> Key&amp; Key)</span></span>;</span><br><span class="line">  <span class="function">iterator <span class="title">erase</span><span class="params">(const_iterator pos)</span></span>;</span><br><span class="line">  <span class="function">iterator <span class="title">erase</span><span class="params">(const_iterator first, const_iterator last)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Copy</span></span><br><span class="line">  Map(<span class="keyword">const</span> Map&amp; other);</span><br><span class="line">  Map&amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Map&amp; other);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>添加数据的最简单的方法是使用普通的地图语法，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">unique_ptr</span>&lt;ProtoName&gt; my_enclosing_proto(<span class="keyword">new</span> ProtoName);</span><br><span class="line">(*my_enclosing_proto-&gt;mutable_weight())[my_key] = my_value;</span><br></pre></td></tr></table></figure>
+<p><code>pair&lt;iterator, bool&gt; insert(const value_type&amp; value)</code>将隐含地导致<code>value_type</code>实例的深层副本。将新值插入到一个最有效的方法<code>google::protobuf::Map</code>如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T&amp; <span class="keyword">operator</span>[](<span class="keyword">const</span> Key&amp; key): <span class="built_in">map</span>[new_key] = new_mapped;</span><br></pre></td></tr></table></figure>
+<p>使用<code>google::protobuf::Map</code>标准<code>Map</code></p>
+<p><code>google::protobuf::Map</code>支持相同的迭代器<code>API</code>的<code>std::map</code>和<code>std::unordered_map</code>。如果您不想<code>google::protobuf::Map</code>直接使用，可以<code>google::protobuf::Map</code>通过执行以下操作转换为标准<code>Map</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">map</span>&lt;int32, int32&gt; standard_map(message.weight().begin(),</span><br><span class="line">                                    message.weight().end());</span><br></pre></td></tr></table></figure>
+<p>请注意，这将使整个Map的深层副本。</p>
+<p>您还可以<code>google::protobuf::Map</code>按照以下方式从标准映射构建一个：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">google::protobuf::Map&lt;int32, int32&gt; weight(standard_map.begin(), standard_map.end());</span><br></pre></td></tr></table></figure>
+<p>解析未知值</p>
+<p>在线上，<code>.proto</code>映射等效于每个<code>key/value</code>对的映射条目消息，而映射本身是映射条目的重复字段。像普通消息类型一样，解析的映射条目消息可能具有未知字段：例如，<code>int64</code>定义为映射的映射中的类型字段<code>map&lt;int32, string&gt;</code>。</p>
+<p>如果Map条目消息的有线格式中有未知字段，则它们将被丢弃。</p>
+<p>如果Map条目消息的有线格式中有一个未知的枚举值，那么它在<code>proto2</code>和<code>proto3</code>中的处理方式不同。在<code>proto2</code>中，将整个map条目消息放入包含消息的未知字段集中。在<code>proto3</code>中，它被放入一个映射字段，就像它是一个已知的枚举值一样。</p>
+<h3 id="Any"><a href="#Any" class="headerlink" title="Any"></a>Any</h3><p>给出一个<code>Any</code>这样的字段：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import &quot;google/protobuf/any.proto&quot;;</span><br><span class="line"></span><br><span class="line">message ErrorStatus &#123;</span><br><span class="line">  string message = 1;</span><br><span class="line">  google.protobuf.Any details = 2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在我们生成的代码中，该<code>details</code>字段的<code>getter</code>返回一个实例<code>google::protobuf::Any</code>。这提供了以下特殊方法来打包和解压缩Any的值：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Any</span> &#123;</span></span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">  <span class="comment">// Packs the given message into this Any using the default type URL</span></span><br><span class="line">  <span class="comment">// prefix “type.googleapis.com”.</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">PackFrom</span><span class="params">(<span class="keyword">const</span> google::protobuf::Message&amp; message)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Packs the given message into this Any using the given type URL</span></span><br><span class="line">  <span class="comment">// prefix.</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">PackFrom</span><span class="params">(<span class="keyword">const</span> google::protobuf::Message&amp; message,</span></span></span><br><span class="line"><span class="function"><span class="params">                <span class="keyword">const</span> <span class="built_in">string</span>&amp; type_url_prefix)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Unpacks this Any to a Message. Returns false if this Any</span></span><br><span class="line">  <span class="comment">// represents a different protobuf type or parsing fails.</span></span><br><span class="line">  <span class="function"><span class="keyword">bool</span> <span class="title">UnpackTo</span><span class="params">(google::protobuf::Message* message)</span> <span class="keyword">const</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Returns true if this Any represents the given protobuf type.</span></span><br><span class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="function"><span class="keyword">bool</span> <span class="title">Is</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Oneof"><a href="#Oneof" class="headerlink" title="Oneof"></a>Oneof</h3><p>给定一个这样的定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">oneof_name &#123;</span><br><span class="line">    <span class="built_in">int32</span> foo_int = <span class="number">4</span>;</span><br><span class="line">    <span class="built_in">string</span> foo_string = <span class="number">9</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译器将生成以下<code>C++</code>枚举类型：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">enum OneofNameCase &#123;</span><br><span class="line">  kFooInt = 4,</span><br><span class="line">  kFooString = 9,</span><br><span class="line">  ONEOF_NAME_NOT_SET = 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外，它会产生这种方法：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OneofNameCase oneof_name_case() const：返回指定哪个字段被设置的枚举。ONEOF_NAME_NOT_SET如果没有设置它们返回。</span><br></pre></td></tr></table></figure></p>
+<p>编译器还生成以下私有方法，它在一个字段访问器中使用：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void clear_oneof_name()：如果一个字段集使用一个指针（Message或String），并设置一个case，则释放该对象ONEOF_NAME_NOT_SET。</span><br></pre></td></tr></table></figure>
+<h3 id="Enumerations"><a href="#Enumerations" class="headerlink" title="Enumerations"></a>Enumerations</h3><p>给定一个枚举定义，如：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">enum Foo &#123;</span><br><span class="line">  VALUE_A = 0;</span><br><span class="line">  VALUE_B = 5;</span><br><span class="line">  VALUE_C = 1234;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>协议缓冲区编译器将生成一个<code>Foo</code>使用相同值进行调用的<code>C++</code>枚举类型。此外，编译器将生成以下函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const EnumDescriptor* Foo_descriptor()：返回类型的描述符，其中包含有关此枚举类型定义的值的信息。</span><br><span class="line"></span><br><span class="line">bool Foo_IsValid(int value)：true如果给定的数值与其中一个Foo定义的值匹配，则返回。在上面的例子中，true如果输入为0,5或1234 ，则返回。</span><br><span class="line"></span><br><span class="line">const string&amp; Foo_Name(int value)：</span><br><span class="line">返回给定数值的名称。如果不存在这样的值，则返回一个空字符串。如果多个值具有此数字，则返回第一个定义的值。在上面的例子中，Foo_Name(<span class="number">5</span>)会返回<span class="string">"VALUE_B"</span>。</span><br><span class="line"></span><br><span class="line">bool Foo_Parse(const string&amp; name, Foo* value)：</span><br><span class="line">如果name是此枚举的有效值名称，则将该值分配value并返回<span class="literal">true</span>。否则返回<span class="literal">false</span>。在上面的例子中，Foo_Parse(<span class="string">"VALUE_C"</span>, &amp;someFoo)将返回<span class="literal">true</span>并设置someFoo为<span class="number">1234</span>。</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Foo Foo_MIN：枚举的最小有效值（示例中为VALUE_A）。</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Foo Foo_MAX：枚举的最大有效值（在示例中为VALUE_C）。</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> Foo_ARRAYSIZE：总是定义为Foo_MAX + <span class="number">1</span>。</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>将整数转换为proto2枚举时要小心。 如果将整数转换为proto2枚举值，则该整数必须是枚举以外的有效值之一，否则结果可能未定义。如果有疑问，请使用生成的Foo_IsValid()函数来测试该转换是否有效。将proto2消息的枚举类型字段设置为无效值可能会导致断言失败。如果在解析proto2消息时读取一个无效的枚举值，它将被视为未知字段。这些语义在proto3中已经改变了。只要适用于int32，就可以将任何整数转换为proto3枚举值。在解析proto3消息并由枚举字段访问器返回时，也将保留无效的枚举值。</p>
+<p>在switch语句中使用proto3枚举时要小心。Proto3枚举是打开的枚举类型，可能的值超出了指定符号的范围。在解析proto3消息并由枚举字段访问器返回时，将不会识别到枚举值。在没有默认情况下的proto3枚举上的switch语句将无法捕获所有情况，即使列出了所有已知字段。这可能会导致意外的行为，包括数据损坏和运行时崩溃。始终添加默认情况，或者Foo_IsValid(int)在交换机外部显式调用以处理未知的枚举值。</p>
+</blockquote>
+<p>您可以在消息类型中定义一个枚举。在这种情况下，协议缓冲区编译器会生成代码，使得它看起来是枚举类型本身被声明为嵌套在消息的类中。在Foo_descriptor()与Foo_IsValid()函数声明为静态方法。实际上，枚举类型本身及其值在全局范围内被声明为具有变量名称，并且通过typedef和一系列常量定义导入到类的范围内。这只是为了避免声明排序的问题。不要依赖于被破坏的顶级名称; 假装枚举真的嵌套在消息类中。</p>
+<h3 id="Extensions-proto2-only"><a href="#Extensions-proto2-only" class="headerlink" title="Extensions (proto2 only)"></a>Extensions (proto2 only)</h3><p>给定一个扩展范围的消息：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">message Foo &#123;</span><br><span class="line">  extensions 100 to 199;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该协议缓冲编译器将产生一些额外的方法<code>Foo</code>： <code>HasExtension()</code>，<code>ExtensionSize()</code>，<code>ClearExtension()</code>，<code>GetExtension()</code>，<code>SetExtension()</code>，<code>MutableExtension()</code>，<code>AddExtension()</code>，<code>SetAllocatedExtension()</code>和<code>ReleaseExtension()</code>。作为其第一参数，这些方法中的每一个都采用标识扩展字段的扩展标识符（如下所述）。剩余的参数和返回值与对于与扩展标识符相同类型的普通（非扩展）字段生成的相应存取器方法的参数和返回值完全相同。（<code>GetExtension()</code>对应于没有特殊前缀的访问器）</p>
+<p>给定一个扩展定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">extend Foo &#123;</span><br><span class="line">  <span class="keyword">optional</span> <span class="built_in">int32</span> bar = <span class="number">123</span>;</span><br><span class="line">  <span class="keyword">repeated</span> <span class="built_in">int32</span> repeated_bar = <span class="number">124</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于单个扩展字段<code>bar</code>，协议缓冲区编译器生成一个调用的扩展标识符 <code>bar</code>，您可以使用它们<code>Foo</code>的扩展访问器来访问此扩展，如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Foo foo;</span><br><span class="line">assert(!foo.HasExtension(bar));</span><br><span class="line">foo.SetExtension(bar, <span class="number">1</span>);</span><br><span class="line">assert(foo.HasExtension(bar));</span><br><span class="line">assert(foo.GetExtension(bar) == <span class="number">1</span>);</span><br><span class="line">foo.ClearExtension(bar);</span><br><span class="line">assert(!foo.HasExtension(bar));</span><br></pre></td></tr></table></figure>
+<p>类似地，对于重复的扩展字段<code>repeated_bar</code>，编译器生成一个调用的扩展标识符<code>repeated_bar</code>，您也可以使用Foo扩展名的扩展名：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Foo foo;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; kSize; ++i) &#123;</span><br><span class="line">  foo.AddExtension(repeated_bar, i)</span><br><span class="line">&#125;</span><br><span class="line">assert(foo.ExtensionSize(repeated_bar) == kSize)</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; kSize; ++i) &#123;</span><br><span class="line">  assert(foo.GetExtension(repeated_bar, i) == i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（扩展名标识符的确切实现是复杂的，涉及神奇使用模板 - 但是，您不需要担心扩展名标识符如何使用它们。）</p>
+<p>扩展可以被声明为嵌套在另一种类型之内。例如，一个常见的模式是做这样的事情：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">message Baz &#123;</span><br><span class="line">  extend Foo &#123;</span><br><span class="line">    optional Baz foo_ext = 124;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这种情况下，扩展名标识符<code>foo_ext</code>被声明嵌套在里面<code>Baz</code>。可以使用如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Foo foo;</span><br><span class="line">Baz* baz = foo.MutableExtension(Baz::foo_ext);</span><br><span class="line">FillInMyBaz(baz);</span><br></pre></td></tr></table></figure>
+<h3 id="Arena-Allocation"><a href="#Arena-Allocation" class="headerlink" title="Arena Allocation"></a>Arena Allocation</h3><p>Arena分配<br>是一个仅<code>C++</code>功能，可帮助您优化内存使用情况，并在使用协议缓冲区时提高性能。在您<code>.proto</code>的<code>C++</code>生成的代码中添加额外的代码来使用Arena分配。您可以在“Arena分配指南”中了解有关竞技场分配<code>API</code>的更多信息。</p>
+<h3 id="Services"><a href="#Services" class="headerlink" title="Services"></a>Services</h3><p>如果<code>.proto</code>文件包含以下行：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">option</span> cc_generic_services = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<p>然后，协议缓冲区编译器将根据本节中所述的文件中找到的服务定义生成代码。然而，所生成的代码可能是不期望的，因为它不与任何特定的<code>RPC</code>系统相关联，并且因此需要针对一个系统进行编码的更多级别的间接代码。如果您不希望生成此代码，请将此行添加到文件中：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">option</span> cc_generic_services = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+<p>如果不给出上述任何一行，则该选项默认 <code>false</code>为通用服务已被弃用。（请注意，在2.4.0之前，该选项默认为<code>true</code>）</p>
+<p>基于<code>.proto</code>语言服务定义的RPC系统应该提供插件来为系统生成代码。这些插件可能要求抽象服务被禁用，以便它们可以生成自己的同名的类。插件是新版本2.3.0（2010年1月）。</p>
+<p>本节的其余部分描述了启用抽象服务时协议缓冲区编译器生成的内容。</p>
+<h4 id="Interface"><a href="#Interface" class="headerlink" title="Interface"></a>Interface</h4><p>给定服务定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service Foo &#123;</span><br><span class="line">  <span class="function">rpc <span class="title">Bar</span><span class="params">(FooRequest)</span> <span class="title">returns</span><span class="params">(FooResponse)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>协议缓冲区编译器将生成一个类Foo来表示此服务。 Foo将为服务定义中定义的每个方法设置虚拟方法。在这种情况下，该方法Bar定义为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Bar</span><span class="params">(RpcController* controller, <span class="keyword">const</span> FooRequest* request,</span></span></span><br><span class="line"><span class="function"><span class="params">                 FooResponse* response, Closure* done)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>参数等同于参数<code>Service::CallMethod()</code>，除了<code>method</code>参数是隐含的，<code>request</code>和<code>response</code>指定其确切类型。</p>
+<p>这些生成的方法是虚的，但不是纯虚的。默认实现只需调用一个<code>controller-&gt;SetFailed()</code>错误消息，指示该方法未实现，然后调用回调<code>done</code>。实现自己的服务时，您必须对此生成的服务进行子类化，并根据需要实现其方法。</p>
+<p>Foo子类Service接口。协议缓冲区编译器自动生成方法的实现Service如下：</p>
+<ul>
+<li>GetDescriptor：返回服务的ServiceDescriptor。</li>
+<li>CallMethod：根据提供的方法描述符确定正在调用哪个方法，并直接调用它，将请求和响应消息对象降级到正确的类型。</li>
+<li>GetRequestPrototype和GetResponsePrototype：返回给定方法的正确类型的请求或响应的默认实例。</li>
+</ul>
+<p>还会生成以下静态方法：</p>
+<ul>
+<li><code>static ServiceDescriptor descriptor()</code>：返回类型的描述符，其中包含有关此服务具有哪些方法及其输入和输出类型的信息。</li>
+</ul>
+<h4 id="Stub"><a href="#Stub" class="headerlink" title="Stub"></a>Stub</h4><p>协议缓冲区编译器还生成每个服务接口的“stub”实现，由客户端希望向执行服务的服务器发送请求使用。对于Foo服务（上），<code>Foo_Stub</code>将定义存根实现。与嵌套消息类型一样，使用<code>typedef Foo_Stub</code>也可以被称为<code>Foo::Stub</code>。</p>
+<p>Foo_Stub是一个子类Foo也实现了以下方法：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Foo_Stub(RpcChannel* channel)：构造在给定通道上发送请求的新存根。</span><br><span class="line">Foo_Stub(RpcChannel* channel, ChannelOwnership ownership)：构造一个新的存根，在给定的通道上发送请求，并且可能拥有该通道。如果ownership是，Service::STUB_OWNS_CHANNEL当存根对象被删除时，它也会删除该通道。</span><br><span class="line">RpcChannel* channel()：返回此存根的通道，传递给构造函数。</span><br></pre></td></tr></table></figure></p>
+<p>存根附加地将每个服务的方法实现为通道周围的包装器。调用一种方法简单地调用<code>channel-&gt;CallMethod()</code>。</p>
+<p>协议缓冲库不包括RPC实现。但是，它包括将生成的服务类连接到您选择的任意任意RPC实现所需的所有工具。您只需要提供RpcChannel和的实现RpcController。有关service.h详细信息，请参阅文档。</p>
+<h3 id="Plugin-Insertion-Points"><a href="#Plugin-Insertion-Points" class="headerlink" title="Plugin Insertion Points"></a>Plugin Insertion Points</h3><p>要扩展C ++代码生成器的输出的代码生成器插件可以使用给定的插入点名称插入以下类型的代码。除非另有说明，否则每个插入点都显示在.pb.cc文件和.pb.h文件中。</p>
+<ul>
+<li>includes：包含指令。</li>
+<li>namespace_scope：属于文件包/命名空间但不在任何特定类中的声明。出现在所有其他命名空间范围代码之后。</li>
+<li>global_scope：属于文件命名空间之外的顶层的声明。出现在文件的最后端。</li>
+<li>class_scope:TYPENAME：属于消息类的成员声明。 TYPENAME是完整的原名，例如package.MessageType。在课后所有其他公开声明后出现。此插入点仅显示在.pb.h文件中。</li>
+</ul>
+<blockquote>
+<p>不要生成依赖于标准代码生成器声明的私有类成员的代码，因为这些实现细节可能会在将来版本的协议缓冲区中更改。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Zeus
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://gubangzhong.cn/2017/07/13/protobuf生成cplusplus代码详解/" title="protobuf生成c++代码详解(初稿)">http://gubangzhong.cn/2017/07/13/protobuf生成cplusplus代码详解/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c/" rel="tag"># c++</a>
+          
+            <a href="/tags/protobuf/" rel="tag"># protobuf</a>
+          
+            <a href="/tags/google/" rel="tag"># google</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/13/批处理git命令/" rel="next" title="批处理git命令">
+                <i class="fa fa-chevron-left"></i> 批处理git命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/17/Matlab常用函数及技巧/" rel="prev" title="Matlab常用函数及技巧">
+                Matlab常用函数及技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Zeus</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/maxiaoyuelun" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://xxx.xxx.com" target="_blank" title="Weibo">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Compiler-Invocation"><span class="nav-number">1.</span> <span class="nav-text">Compiler Invocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Packages"><span class="nav-number">2.</span> <span class="nav-text">Packages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Messages"><span class="nav-number">3.</span> <span class="nav-text">Messages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fields"><span class="nav-number">4.</span> <span class="nav-text">Fields</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Numeric-Fields-proto2"><span class="nav-number">4.1.</span> <span class="nav-text">Singular Numeric Fields (proto2)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Numeric-Fields-proto3"><span class="nav-number">4.2.</span> <span class="nav-text">Singular Numeric Fields (proto3)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-String-Fields-proto2"><span class="nav-number">4.3.</span> <span class="nav-text">Singular String Fields (proto2)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-String-Fields-proto3"><span class="nav-number">4.4.</span> <span class="nav-text">Singular String Fields (proto3)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Enum-Fields-proto2"><span class="nav-number">4.5.</span> <span class="nav-text">Singular Enum Fields (proto2)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Enum-Fields-proto3"><span class="nav-number">4.6.</span> <span class="nav-text">Singular Enum Fields (proto3)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Embedded-Message-Fields"><span class="nav-number">4.7.</span> <span class="nav-text">Singular Embedded Message Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Repeated-Numeric-Fields"><span class="nav-number">4.8.</span> <span class="nav-text">Repeated Numeric Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Repeated-String-Fields"><span class="nav-number">4.9.</span> <span class="nav-text">Repeated String Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Repeated-Enum-Fields"><span class="nav-number">4.10.</span> <span class="nav-text">Repeated Enum Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Repeated-Embedded-Message-Fields"><span class="nav-number">4.11.</span> <span class="nav-text">Repeated Embedded Message Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oneof-Numeric-Fields"><span class="nav-number">4.12.</span> <span class="nav-text">Oneof Numeric Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oneof-String-Fields"><span class="nav-number">4.13.</span> <span class="nav-text">Oneof String Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oneof-Enum-Fields"><span class="nav-number">4.14.</span> <span class="nav-text">Oneof Enum Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oneof-Embedded-Message-Fields"><span class="nav-number">4.15.</span> <span class="nav-text">Oneof Embedded Message Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Map-Fields"><span class="nav-number">4.16.</span> <span class="nav-text">Map Fields</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Any"><span class="nav-number">5.</span> <span class="nav-text">Any</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Oneof"><span class="nav-number">6.</span> <span class="nav-text">Oneof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enumerations"><span class="nav-number">7.</span> <span class="nav-text">Enumerations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Extensions-proto2-only"><span class="nav-number">8.</span> <span class="nav-text">Extensions (proto2 only)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Arena-Allocation"><span class="nav-number">9.</span> <span class="nav-text">Arena Allocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Services"><span class="nav-number">10.</span> <span class="nav-text">Services</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Interface"><span class="nav-number">10.1.</span> <span class="nav-text">Interface</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Stub"><span class="nav-number">10.2.</span> <span class="nav-text">Stub</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Plugin-Insertion-Points"><span class="nav-number">11.</span> <span class="nav-text">Plugin Insertion Points</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zeus</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.4"></script>
+
+
+</body>
+</html>
