@@ -78,7 +78,7 @@
 
 
 
-  <meta name="keywords" content="google,glog," />
+  <meta name="keywords" content="hexo," />
 
 
 
@@ -89,18 +89,18 @@
 
 
 
-<meta name="description" content="最近看caffe源码，希望对源码中的每个知识点都吃透，遇到不会的记录。今天仅记录glog的一段测试代码，详细TBD。">
-<meta name="keywords" content="google,glog">
+<meta name="description" content="hexo跨博客文章推荐插件 链接在此：hexo-recommended-posts">
+<meta name="keywords" content="hexo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="glog初步体验">
-<meta property="og:url" content="http://gubangzhong.cn/2017/07/13/glog初步体验/index.html">
+<meta property="og:title" content="hexo文章推荐">
+<meta property="og:url" content="http://gubangzhong.cn/2018/04/16/hexo文章推荐/index.html">
 <meta property="og:site_name" content="老骥伏枥">
-<meta property="og:description" content="最近看caffe源码，希望对源码中的每个知识点都吃透，遇到不会的记录。今天仅记录glog的一段测试代码，详细TBD。">
+<meta property="og:description" content="hexo跨博客文章推荐插件 链接在此：hexo-recommended-posts">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-07-13T05:20:05.000Z">
+<meta property="og:updated_time" content="2018-04-16T07:51:12.508Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="glog初步体验">
-<meta name="twitter:description" content="最近看caffe源码，希望对源码中的每个知识点都吃透，遇到不会的记录。今天仅记录glog的一段测试代码，详细TBD。">
+<meta name="twitter:title" content="hexo文章推荐">
+<meta name="twitter:description" content="hexo跨博客文章推荐插件 链接在此：hexo-recommended-posts">
 
 
 
@@ -130,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://gubangzhong.cn/2017/07/13/glog初步体验/"/>
+  <link rel="canonical" href="http://gubangzhong.cn/2018/04/16/hexo文章推荐/"/>
 
 
 
 
 
-  <title>glog初步体验 | 老骥伏枥</title>
+  <title>hexo文章推荐 | 老骥伏枥</title>
   
 
 
@@ -347,7 +347,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://gubangzhong.cn/2017/07/13/glog初步体验/">
+    <link itemprop="mainEntityOfPage" href="http://gubangzhong.cn/2018/04/16/hexo文章推荐/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="老骥">
@@ -364,7 +364,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">glog初步体验</h1>
+          <h1 class="post-title" itemprop="name headline">hexo文章推荐</h1>
         
 
         <div class="post-meta">
@@ -376,8 +376,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-13T12:09:05+08:00">
-                2017-07-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T15:49:48+08:00">
+                2018-04-16
               </time>
             
 
@@ -435,7 +435,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  131
+                  72
                 </span>
               
 
@@ -472,11 +472,9 @@
       
 
       
-        <script src="\assets\js\APlayer.min.js"> </script><blockquote>
-<p>最近看caffe源码，希望对源码中的每个知识点都吃透，遇到不会的记录。今天仅记录glog的一段测试代码，详细TBD。</p>
-</blockquote>
-<a id="more"></a>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glog\logging.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> google;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	google::InitGoogleLogging(<span class="string">""</span>);</span><br><span class="line">	google::SetLogDestination(google::GLOG_INFO, <span class="string">"./myInfo"</span>);</span><br><span class="line">	LOG(INFO) &lt;&lt; <span class="string">"This is a message!"</span>;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">2</span>;</span><br><span class="line">	CHECK_GT(a, <span class="number">3</span>) &lt;&lt; <span class="string">"a is little than 3!"</span>;</span><br><span class="line">	google::ShutdownGoogleLogging();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://gubangzhong.cn/2016/11/09/Protobuf安装使用指南/">Protobuf安装使用指南</a></li><li><a href="http://gubangzhong.cn/2017/07/13/protobuf生成cplusplus代码详解/">protobuf生成c++代码详解(初稿)</a></li></ul></div>
+        <script src="\assets\js\APlayer.min.js"> </script><p>hexo跨博客文章推荐插件</p>
+<p>链接在此：<a href="https://github.com/huiwang/hexo-recommended-posts" target="_blank" rel="noopener">hexo-recommended-posts</a></p>
+<a id="more"></a><div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://gubangzhong.cn/2016/11/09/Hexo静态站点搭建/">Hexo静态站点搭建</a></li><li><a href="http://gubangzhong.cn/2017/03/28/hexo插件收集/">hexo插件收集</a></li><li><a href="http://gubangzhong.cn/2018/04/16/next豆瓣插件/">next豆瓣插件</a></li><li><a href="http://www.davidfnck.com/blockchain/mine-xmr-in-hexo-by-coinhive.html/">区块链时代的最正确的打赏姿势——在Hexo博客配置Coinhive网页挖矿</a></li></ul></div>
       
     </div>
     
@@ -496,7 +494,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://gubangzhong.cn/2017/07/13/glog初步体验/" title="glog初步体验">http://gubangzhong.cn/2017/07/13/glog初步体验/</a>
+    <a href="http://gubangzhong.cn/2018/04/16/hexo文章推荐/" title="hexo文章推荐">http://gubangzhong.cn/2018/04/16/hexo文章推荐/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -511,9 +509,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/google/" rel="tag"># google</a>
-          
-            <a href="/tags/glog/" rel="tag"># glog</a>
+            <a href="/tags/hexo/" rel="tag"># hexo</a>
           
         </div>
       
@@ -526,8 +522,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/07/类之虚函数纯虚函数和普通函数/" rel="next" title="类之虚函数,纯虚函数和普通函数">
-                <i class="fa fa-chevron-left"></i> 类之虚函数,纯虚函数和普通函数
+              <a href="/2018/04/16/next豆瓣插件/" rel="next" title="next豆瓣插件">
+                <i class="fa fa-chevron-left"></i> next豆瓣插件
               </a>
             
           </div>
@@ -536,8 +532,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/13/windows右键cmd/" rel="prev" title="windows右键cmd">
-                windows右键cmd <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/16/hexo主题prince/" rel="prev" title="hexo主题prince">
+                hexo主题prince <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
