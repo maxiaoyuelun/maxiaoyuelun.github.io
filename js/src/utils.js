@@ -7,48 +7,51 @@ NexT.utils = NexT.$u = {
   wrapImageWithFancyBox: function () {
     $('.content img')
       .not('[hidden]')
-      //.not('.group-picture img, .post-gallery img')
+      .not('.group-picture img, .post-gallery img')
       .each(function () {
         var $image = $(this);
-        var imageTitle = $image.attr('title');
-        var $imageWrapLink = $image.parent('a');
+          /*var imageTitle = $image.attr('title');原始*/
+          var $imageWrapLink = $image.parent('a');
 
-        if ($imageWrapLink.size() < 1) {
-	        var imageLink = ($image.attr('data-original')) ? this.getAttribute('data-original') : this.getAttribute('src');
-          $imageWrapLink = $image.wrap('<a href="' + imageLink + '"></a>').parent('a');
-        }
+          if ($imageWrapLink.size() < 1) {
+              var imageLink = ($image.attr('data-original')) ? this.getAttribute('data-original') : this.getAttribute('src');
+            $imageWrapLink = $image.wrap('<a href="' + imageLink + '"></a>').parent('a');
+          }
 
-        $imageWrapLink.addClass('fancybox fancybox.image');
-        $imageWrapLink.attr('rel', 'group');
+          // $imageWrapLink.addClass('fancybox fancybox.image');
+          // $imageWrapLink.attr('rel', 'group');
+          //
+          // if (imageTitle) {
+          //   $imageWrapLink.append('<p class="image-caption">' + imageTitle + '</p>');
+          //
+          //   //make sure img title tag will show correctly in fancybox
+          //   $imageWrapLink.attr('title', imageTitle);
+          if (!$imageWrapLink.attr('data-fancybox')) {
+              $imageWrapLink.attr('data-fancybox', 'group');
+          }
+        });
 
-        if (imageTitle) {
-          $imageWrapLink.append('<p class="image-caption">' + imageTitle + '</p>');
-
-          //make sure img title tag will show correctly in fancybox
-          $imageWrapLink.attr('title', imageTitle);
-        }
+      // $('.fancybox').fancybox({
+      //   helpers: {
+      //     overlay: {
+      //       locked: false
+      //     }
+      //   }
+      $('[data-fancybox]').fancybox({
       });
+    },
 
-    $('.fancybox').fancybox({
-      helpers: {
-        overlay: {
-          locked: false
-        }
-      }
-    });
-  },
+    lazyLoadPostsImages: function () {
+      $('#posts').find('img').lazyload({
+        //placeholder: '/images/loading.gif',
+        effect: 'fadeIn',
+        threshold : 0
+      });
+    },
 
-  lazyLoadPostsImages: function () {
-    $('#posts').find('img').lazyload({
-      //placeholder: '/images/loading.gif',
-      effect: 'fadeIn',
-      threshold : 0
-    });
-  },
-
-  /**
-   * Tabs tag listener (without twitter bootstrap).
-   */
+    /**
+     * Tabs tag listener (without twitter bootstrap).
+     */
   registerTabsTag: function () {
     var tNav = '.tabs ul.nav-tabs ';
 

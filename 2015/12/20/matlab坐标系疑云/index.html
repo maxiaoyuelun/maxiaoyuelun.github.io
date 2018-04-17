@@ -6,7 +6,6 @@
 
 
 <html class="theme-next pisces use-motion" lang="zh-Hans">
-
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,13 +13,6 @@
 <meta name="theme-color" content="#222">
 
 
-
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
 
 
 
@@ -50,7 +42,7 @@
   
     
   
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
 
 
 
@@ -203,16 +195,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
@@ -243,16 +225,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-photos">
-          <a href="/photos/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-camera"></i> <br />
-            
-            相册
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-movies">
           <a href="/movies/" rel="section">
             
@@ -268,7 +240,17 @@
             
               <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
             
-            书籍
+            读书
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photos">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
           </a>
         </li>
       
@@ -420,11 +402,6 @@
           
 
           
-            <span class="post-meta-divider">|</span>
-            <span class="page-pv"><i class="fa fa-file-o"></i>
-            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
-            </span>
-          
 
           
             <div class="post-wordcount">
@@ -481,7 +458,7 @@
 <p><img src="http://wx1.sinaimg.cn/mw690/005IKUsQly1fmn5rn6v4xj307y07pwea.jpg" alt=""></p>
 <p>如上图所示，即是matlab图像格式，假设图像用<code>I</code>表示，那么在<code>x</code>轴100和<code>y</code>轴50处，读取图像的像素为<code>I(50,100)</code>，此即为matlab的坐标系格式。一般在figure中点击某点显示像素坐标，显示的是<code>x</code>轴和<code>y</code>轴的坐标，但是编写代码的时候就要反过来，注意注意。</p>
 <p>另外，matlab的坐标系是从<code>1</code>开始的，而不是从<code>0</code>开始。</p>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://gubangzhong.cn/2016/11/10/MatConvNet安装指北/">MatConvNet安装指北</a></li><li><a href="http://gubangzhong.cn/2017/07/17/Matlab常用函数及技巧/">Matlab常用函数及技巧</a></li><li><a href="http://gubangzhong.cn/2016/11/10/Vlfeat编译指北/">Vlfeat编译指北</a></li></ul></div>
+<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://gubangzhong.cn/2017/07/17/Matlab常用函数及技巧/">Matlab常用函数及技巧</a></li><li><a href="http://gubangzhong.cn/2016/11/10/MatConvNet安装指北/">MatConvNet安装指北</a></li><li><a href="http://gubangzhong.cn/2016/11/10/Vlfeat编译指北/">Vlfeat编译指北</a></li></ul></div>
       
     </div>
     
@@ -622,7 +599,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -644,7 +621,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -660,13 +637,7 @@
                   <span class="links-of-author-item">
                     <a href="https://github.com/maxiaoyuelun" target="_blank" title="GitHub">
                       
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://xxx.xxx.com" target="_blank" title="Weibo">
-                      
-                        <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                        <i class="fa fa-fw fa-github"></i></a>
                   </span>
                 
             </div>
@@ -685,11 +656,15 @@
               <ul class="links-of-blogroll-list">
                 
                   <li class="links-of-blogroll-item">
-                    <a href="http://www.dobest.me" title="ERIC HUANG" target="_blank">ERIC HUANG</a>
+                    <a href="https://molunerfinn.com/" title="MARKSZのBlog" target="_blank">MARKSZのBlog</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://hui-wang.info" title="王辉的博客" target="_blank">王辉的博客</a>
+                    <a href="http://chensd.com/" title="不可能不确定" target="_blank">不可能不确定</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ruanyifeng.com" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
                   </li>
                 
               </ul>
@@ -738,37 +713,28 @@
   <span class="author" itemprop="copyrightHolder">老骥</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">39.3k</span>
+  
 </div>
 
 
 
 
 
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
 
         
-<div class="busuanzi-count">
-  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-  
-    <span class="site-uv">
-      <i class="fa fa-user"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-      
-    </span>
-  
-
-  
-    <span class="site-pv">
-      <i class="fa fa-eye"></i>
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-      
-    </span>
-  
-</div>
-
 
 
 
@@ -849,7 +815,7 @@
 
   
   
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js"></script>
   
 
 
@@ -875,8 +841,6 @@
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
 
 
@@ -1257,12 +1221,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.4"></script>
 
-
-  
-  
-  
 </body>
-
 </html>
