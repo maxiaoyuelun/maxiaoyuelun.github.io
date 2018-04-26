@@ -1,12 +1,12 @@
 .times {
   display: block;
-  margin: 50px 0;
+  margin: 20px 0;
 }
 /*首先，我们要创建一个容器class*/
 .times ul {
-  margin-right: 100px;
-  margin-left: 150px;
-  border-left: 2px solid #ddd;
+  margin-right: 5px;
+  margin-left: 10px;
+  border-left: 1px solid #ddd;
   list-style-type: none;
 }
 /*利用ul标签的特性，设置外边框左移25px，左边边框是2px粗的实心线，颜色一般要浅一点*/
@@ -1882,7 +1882,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffa8ff;
+  background: #4b835d;
 }
 .links-of-blogroll {
   font-size: 13px;
