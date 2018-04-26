@@ -22,7 +22,7 @@
 }
 .times ul li span {
   padding-left: 7px;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 20px;
   color: #555;
   margin-down: 50px;
@@ -1882,7 +1882,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #4b835d;
+  background: #9ff;
 }
 .links-of-blogroll {
   font-size: 13px;
