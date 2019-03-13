@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="c,c++,cuda," />
+  <meta name="keywords" content="cuda,c,c++," />
 
 
 
@@ -82,10 +82,10 @@
 
 
 <meta name="description" content="cuda进行均值滤波，主要blockIdx、blockDim、threadIdx等知识点。">
-<meta name="keywords" content="c,c++,cuda">
+<meta name="keywords" content="cuda,c,c++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CUDA均值滤波">
-<meta property="og:url" content="http://gubangzhong.cn/2016/11/09/CUDA均值滤波/index.html">
+<meta property="og:url" content="http://maxiaoyuelun.github.io/2016/11/09/CUDA均值滤波/index.html">
 <meta property="og:site_name" content="老骥伏枥">
 <meta property="og:description" content="cuda进行均值滤波，主要blockIdx、blockDim、threadIdx等知识点。">
 <meta property="og:locale" content="zh-Hans">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://gubangzhong.cn/2016/11/09/CUDA均值滤波/"/>
+  <link rel="canonical" href="http://maxiaoyuelun.github.io/2016/11/09/CUDA均值滤波/"/>
 
 
 
@@ -234,6 +234,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-photos">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-movies">
           <a href="/movies/" rel="section">
             
@@ -340,7 +350,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://gubangzhong.cn/2016/11/09/CUDA均值滤波/">
+    <link itemprop="mainEntityOfPage" href="http://maxiaoyuelun.github.io/2016/11/09/CUDA均值滤波/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="彦修">
@@ -423,7 +433,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  744
+                  703
                 </span>
               
 
@@ -467,7 +477,7 @@
 <h4 id="main-h"><a href="#main-h" class="headerlink" title="main.h"></a>main.h</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;time.h&gt;//时间相关头文件，可用其中函数计算图像处理速度  </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> datasize 80000</span></span><br></pre></td></tr></table></figure>
 <h4 id="main-cpp"><a href="#main-cpp" class="headerlink" title="main.cpp"></a>main.cpp</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;opencv2\opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"main.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="function"><span class="keyword">int</span> <span class="title">runtest_img</span><span class="params">(<span class="keyword">int</span>* host_a, <span class="keyword">int</span>* host_b, <span class="keyword">int</span> h, <span class="keyword">int</span> w)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello OpenCV CUDA"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	Mat img = imread(<span class="string">"me.jpg"</span>);</span><br><span class="line">	<span class="keyword">if</span> (img.empty())&#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"No \"me.jpg\""</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Mat gray_img;</span><br><span class="line"></span><br><span class="line">	cvtColor(img, gray_img, CV_RGB2GRAY);</span><br><span class="line"></span><br><span class="line">	imshow(<span class="string">"Gray Image"</span>, gray_img);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> rows = gray_img.rows;</span><br><span class="line">	<span class="keyword">int</span> cols = gray_img.cols;</span><br><span class="line">	<span class="keyword">int</span> channels = gray_img.channels();</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"rows : "</span> &lt;&lt; rows &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"cols : "</span> &lt;&lt; cols &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"channels : "</span> &lt;&lt; channels &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span>* host_img = <span class="keyword">new</span> <span class="keyword">int</span>[rows*cols];</span><br><span class="line">	<span class="keyword">int</span>* host_output_img = <span class="keyword">new</span> <span class="keyword">int</span>[rows*cols];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++)&#123;</span><br><span class="line">		uchar* data = gray_img.ptr&lt;uchar&gt;(i);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols ; j++)&#123;</span><br><span class="line">			host_img[i*cols+j] = data[j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; host_img[(rows - <span class="number">1</span>)*cols + cols - <span class="number">1</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">long</span> now1 = clock();<span class="comment">//存储图像处理开始时间   </span></span><br><span class="line">	runtest_img(host_img, host_output_img, rows, cols);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"GPU运行时间为：%dms\n"</span>, <span class="keyword">int</span>(((<span class="keyword">double</span>)(clock() - now1)) / CLOCKS_PER_SEC * <span class="number">1000</span>));<span class="comment">//输出GPU处理时间  </span></span><br><span class="line">	Mat mean_filter_img(Size(cols, rows), CV_8U);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++)&#123;</span><br><span class="line">		uchar* data = mean_filter_img.ptr&lt;uchar&gt;(i);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols; j++)&#123;</span><br><span class="line">			data[j]=host_output_img[i*cols + j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	imshow(<span class="string">"Mean Filter Image"</span>, mean_filter_img);</span><br><span class="line"></span><br><span class="line">	cvWaitKey();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="kernel-cu"><a href="#kernel-cu" class="headerlink" title="kernel.cu"></a>kernel.cu</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"cuda_runtime.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"device_launch_parameters.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"main.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">checkCudaErrors</span><span class="params">(cudaError err)</span><span class="comment">//错误处理函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (cudaSuccess != err)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"CUDA Runtime API error: %s.\n"</span>, cudaGetErrorString(err));</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">__<span class="function">global__ <span class="keyword">void</span> <span class="title">meanFilter</span><span class="params">(<span class="keyword">int</span> *a, <span class="keyword">int</span> *b, <span class="keyword">int</span> h,<span class="keyword">int</span> w)</span><span class="comment">//处理核函数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tid = blockIdx.x*blockDim.x + threadIdx.x;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> nx = blockIdx.x;</span><br><span class="line">	<span class="keyword">int</span> ny = threadIdx.x;</span><br><span class="line">	<span class="keyword">if</span> (nx &gt; <span class="number">0</span> &amp;&amp; nx &lt; h<span class="number">-1</span> &amp;&amp; ny&gt;<span class="number">0</span> &amp;&amp; ny &lt; w<span class="number">-1</span>)&#123;</span><br><span class="line">		b[tid] = <span class="keyword">int</span>((a[(blockIdx.x - <span class="number">1</span>)*blockDim.x + threadIdx.x - <span class="number">1</span>] +</span><br><span class="line">			a[(blockIdx.x - <span class="number">1</span>)*blockDim.x + threadIdx.x +<span class="number">1</span>] +</span><br><span class="line">			a[(blockIdx.x +<span class="number">1</span>)*blockDim.x + threadIdx.x - <span class="number">1</span>] +</span><br><span class="line">			a[(blockIdx.x +<span class="number">1</span>)*blockDim.x + threadIdx.x + <span class="number">1</span>]) / <span class="number">4</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//b[tid] = a[tid];</span></span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="function"><span class="keyword">int</span> <span class="title">runtest_img</span><span class="params">(<span class="keyword">int</span>* host_a, <span class="keyword">int</span>* host_b, <span class="keyword">int</span> h, <span class="keyword">int</span> w)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> num = <span class="number">0</span>;</span><br><span class="line">	cudaDeviceProp prop;</span><br><span class="line">	checkCudaErrors(cudaGetDeviceCount(&amp;num));</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;num; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		cudaGetDeviceProperties(&amp;prop, i);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> *dev_a, *dev_b; </span><br><span class="line">	<span class="comment">//int *dev_h, *dev_w;</span></span><br><span class="line">	checkCudaErrors(cudaMalloc((<span class="keyword">void</span>**)&amp;dev_a, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)* h*w));<span class="comment">//分配显卡内存</span></span><br><span class="line">	checkCudaErrors(cudaMalloc((<span class="keyword">void</span>**)&amp;dev_b, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)* h*w));</span><br><span class="line">	<span class="comment">//checkCudaErrors(cudaMalloc((void**)&amp;dev_h, sizeof(int)));//分配显卡内存</span></span><br><span class="line">	<span class="comment">//checkCudaErrors(cudaMalloc((void**)&amp;dev_w, sizeof(int)));</span></span><br><span class="line"></span><br><span class="line">	checkCudaErrors(cudaMemcpy(dev_a, host_a, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)* h*w, cudaMemcpyHostToDevice));<span class="comment">//将主机待处理数据内存块复制到显卡内存中</span></span><br><span class="line">	checkCudaErrors(cudaMemcpy(dev_b, host_b, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)* h*w, cudaMemcpyHostToDevice));</span><br><span class="line">	<span class="comment">//checkCudaErrors(cudaMemcpy(dev_h, &amp;h, sizeof(int), cudaMemcpyHostToDevice));//将主机待处理数据内存块复制到显卡内存中</span></span><br><span class="line">	<span class="comment">//checkCudaErrors(cudaMemcpy(dev_w, &amp;w, sizeof(int), cudaMemcpyHostToDevice));</span></span><br><span class="line"></span><br><span class="line">	meanFilter &lt;&lt;&lt;h, w &gt;&gt;&gt;(dev_a, dev_b, h,w);<span class="comment">//调用显卡处理数据</span></span><br><span class="line">	checkCudaErrors(cudaMemcpy(host_b, dev_b, <span class="keyword">sizeof</span>(<span class="keyword">int</span>)* h*w, cudaMemcpyDeviceToHost));<span class="comment">//将显卡处理完数据拷回来</span></span><br><span class="line"></span><br><span class="line">	cudaFree(dev_a);<span class="comment">//清理显卡内存</span></span><br><span class="line">	cudaFree(dev_b);</span><br><span class="line">	<span class="comment">/*cudaFree(dev_h);</span></span><br><span class="line"><span class="comment">	cudaFree(dev_w);*/</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://gubangzhong.cn/2016/11/09/C++输出到txt日志/">C++输出到txt日志</a></li><li><a href="http://gubangzhong.cn/2016/11/09/visual-studio-2013编译64位boost/">visual-studio-2013编译64位boost</a></li><li><a href="http://gubangzhong.cn/2017/07/07/类之虚函数纯虚函数和普通函数/">类之虚函数,纯虚函数和普通函数</a></li></ul></div>
+
       
     </div>
     
@@ -487,7 +497,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://gubangzhong.cn/2016/11/09/CUDA均值滤波/" title="CUDA均值滤波">http://gubangzhong.cn/2016/11/09/CUDA均值滤波/</a>
+    <a href="http://maxiaoyuelun.github.io/2016/11/09/CUDA均值滤波/" title="CUDA均值滤波">http://maxiaoyuelun.github.io/2016/11/09/CUDA均值滤波/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -502,11 +512,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/cuda/" rel="tag"># cuda</a>
+          
             <a href="/tags/c/" rel="tag"># c</a>
           
             <a href="/tags/c/" rel="tag"># c++</a>
-          
-            <a href="/tags/cuda/" rel="tag"># cuda</a>
           
         </div>
       
@@ -612,7 +622,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-count">104</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -699,7 +709,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#main-h"><span class="nav-number">1.</span> <span class="nav-text">main.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#main-cpp"><span class="nav-number">2.</span> <span class="nav-text">main.cpp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#kernel-cu"><span class="nav-number">3.</span> <span class="nav-text">kernel.cu</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#main-h"><span class="nav-number">1.</span> <span class="nav-text">main.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#main-cpp"><span class="nav-number">2.</span> <span class="nav-text">main.cpp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#kernel-cu"><span class="nav-number">3.</span> <span class="nav-text">kernel.cu</span></a></li></ol></div>
             
 
           </div>
@@ -719,7 +729,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -733,7 +743,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">54.3k</span>
+    <span title="Site words total count">52.8k</span>
   
 </div>
 

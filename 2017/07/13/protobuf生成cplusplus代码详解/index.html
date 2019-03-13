@@ -85,7 +85,7 @@
 <meta name="keywords" content="c++,protobuf,google">
 <meta property="og:type" content="article">
 <meta property="og:title" content="protobuf生成c++代码详解(初稿)">
-<meta property="og:url" content="http://gubangzhong.cn/2017/07/13/protobuf生成cplusplus代码详解/index.html">
+<meta property="og:url" content="http://maxiaoyuelun.github.io/2017/07/13/protobuf生成cplusplus代码详解/index.html">
 <meta property="og:site_name" content="老骥伏枥">
 <meta property="og:description" content="本文翻译自C++ Generated Code">
 <meta property="og:locale" content="zh-Hans">
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://gubangzhong.cn/2017/07/13/protobuf生成cplusplus代码详解/"/>
+  <link rel="canonical" href="http://maxiaoyuelun.github.io/2017/07/13/protobuf生成cplusplus代码详解/"/>
 
 
 
@@ -234,6 +234,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-photos">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-movies">
           <a href="/movies/" rel="section">
             
@@ -340,7 +350,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://gubangzhong.cn/2017/07/13/protobuf生成cplusplus代码详解/">
+    <link itemprop="mainEntityOfPage" href="http://maxiaoyuelun.github.io/2017/07/13/protobuf生成cplusplus代码详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="彦修">
@@ -423,7 +433,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  9,811
+                  9,771
                 </span>
               
 
@@ -653,7 +663,7 @@
 <blockquote>
 <p>不要生成依赖于标准代码生成器声明的私有类成员的代码，因为这些实现细节可能会在将来版本的协议缓冲区中更改。</p>
 </blockquote>
-<div><h1>推荐文章<span style="font-size:0.45em; color:gray">（由<a href="https://github.com/huiwang/hexo-recommended-posts">hexo文章推荐插件</a>驱动）</span></h1><ul><li><a href="http://gubangzhong.cn/2016/11/09/CUDA均值滤波/">CUDA均值滤波</a></li><li><a href="http://gubangzhong.cn/2016/11/09/C++输出到txt日志/">C++输出到txt日志</a></li><li><a href="http://gubangzhong.cn/2017/07/07/类之虚函数纯虚函数和普通函数/">类之虚函数,纯虚函数和普通函数</a></li></ul></div>
+
       
     </div>
     
@@ -673,7 +683,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://gubangzhong.cn/2017/07/13/protobuf生成cplusplus代码详解/" title="protobuf生成c++代码详解(初稿)">http://gubangzhong.cn/2017/07/13/protobuf生成cplusplus代码详解/</a>
+    <a href="http://maxiaoyuelun.github.io/2017/07/13/protobuf生成cplusplus代码详解/" title="protobuf生成c++代码详解(初稿)">http://maxiaoyuelun.github.io/2017/07/13/protobuf生成cplusplus代码详解/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -798,7 +808,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">103</span>
+                  <span class="site-state-item-count">104</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -885,7 +895,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Compiler-Invocation"><span class="nav-number">1.</span> <span class="nav-text">Compiler Invocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Packages"><span class="nav-number">2.</span> <span class="nav-text">Packages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Messages"><span class="nav-number">3.</span> <span class="nav-text">Messages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fields"><span class="nav-number">4.</span> <span class="nav-text">Fields</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Numeric-Fields-proto2"><span class="nav-number">4.1.</span> <span class="nav-text">Singular Numeric Fields (proto2)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Numeric-Fields-proto3"><span class="nav-number">4.2.</span> <span class="nav-text">Singular Numeric Fields (proto3)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-String-Fields-proto2"><span class="nav-number">4.3.</span> <span class="nav-text">Singular String Fields (proto2)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-String-Fields-proto3"><span class="nav-number">4.4.</span> <span class="nav-text">Singular String Fields (proto3)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Enum-Fields-proto2"><span class="nav-number">4.5.</span> <span class="nav-text">Singular Enum Fields (proto2)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Enum-Fields-proto3"><span class="nav-number">4.6.</span> <span class="nav-text">Singular Enum Fields (proto3)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Embedded-Message-Fields"><span class="nav-number">4.7.</span> <span class="nav-text">Singular Embedded Message Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Repeated-Numeric-Fields"><span class="nav-number">4.8.</span> <span class="nav-text">Repeated Numeric Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Repeated-String-Fields"><span class="nav-number">4.9.</span> <span class="nav-text">Repeated String Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Repeated-Enum-Fields"><span class="nav-number">4.10.</span> <span class="nav-text">Repeated Enum Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Repeated-Embedded-Message-Fields"><span class="nav-number">4.11.</span> <span class="nav-text">Repeated Embedded Message Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oneof-Numeric-Fields"><span class="nav-number">4.12.</span> <span class="nav-text">Oneof Numeric Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oneof-String-Fields"><span class="nav-number">4.13.</span> <span class="nav-text">Oneof String Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oneof-Enum-Fields"><span class="nav-number">4.14.</span> <span class="nav-text">Oneof Enum Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oneof-Embedded-Message-Fields"><span class="nav-number">4.15.</span> <span class="nav-text">Oneof Embedded Message Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Map-Fields"><span class="nav-number">4.16.</span> <span class="nav-text">Map Fields</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Any"><span class="nav-number">5.</span> <span class="nav-text">Any</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Oneof"><span class="nav-number">6.</span> <span class="nav-text">Oneof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enumerations"><span class="nav-number">7.</span> <span class="nav-text">Enumerations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Extensions-proto2-only"><span class="nav-number">8.</span> <span class="nav-text">Extensions (proto2 only)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Arena-Allocation"><span class="nav-number">9.</span> <span class="nav-text">Arena Allocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Services"><span class="nav-number">10.</span> <span class="nav-text">Services</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Interface"><span class="nav-number">10.1.</span> <span class="nav-text">Interface</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Stub"><span class="nav-number">10.2.</span> <span class="nav-text">Stub</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Plugin-Insertion-Points"><span class="nav-number">11.</span> <span class="nav-text">Plugin Insertion Points</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">推荐文章（由hexo文章推荐插件驱动）</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Compiler-Invocation"><span class="nav-number">1.</span> <span class="nav-text">Compiler Invocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Packages"><span class="nav-number">2.</span> <span class="nav-text">Packages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Messages"><span class="nav-number">3.</span> <span class="nav-text">Messages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fields"><span class="nav-number">4.</span> <span class="nav-text">Fields</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Numeric-Fields-proto2"><span class="nav-number">4.1.</span> <span class="nav-text">Singular Numeric Fields (proto2)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Numeric-Fields-proto3"><span class="nav-number">4.2.</span> <span class="nav-text">Singular Numeric Fields (proto3)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-String-Fields-proto2"><span class="nav-number">4.3.</span> <span class="nav-text">Singular String Fields (proto2)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-String-Fields-proto3"><span class="nav-number">4.4.</span> <span class="nav-text">Singular String Fields (proto3)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Enum-Fields-proto2"><span class="nav-number">4.5.</span> <span class="nav-text">Singular Enum Fields (proto2)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Enum-Fields-proto3"><span class="nav-number">4.6.</span> <span class="nav-text">Singular Enum Fields (proto3)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Singular-Embedded-Message-Fields"><span class="nav-number">4.7.</span> <span class="nav-text">Singular Embedded Message Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Repeated-Numeric-Fields"><span class="nav-number">4.8.</span> <span class="nav-text">Repeated Numeric Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Repeated-String-Fields"><span class="nav-number">4.9.</span> <span class="nav-text">Repeated String Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Repeated-Enum-Fields"><span class="nav-number">4.10.</span> <span class="nav-text">Repeated Enum Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Repeated-Embedded-Message-Fields"><span class="nav-number">4.11.</span> <span class="nav-text">Repeated Embedded Message Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oneof-Numeric-Fields"><span class="nav-number">4.12.</span> <span class="nav-text">Oneof Numeric Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oneof-String-Fields"><span class="nav-number">4.13.</span> <span class="nav-text">Oneof String Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oneof-Enum-Fields"><span class="nav-number">4.14.</span> <span class="nav-text">Oneof Enum Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oneof-Embedded-Message-Fields"><span class="nav-number">4.15.</span> <span class="nav-text">Oneof Embedded Message Fields</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Map-Fields"><span class="nav-number">4.16.</span> <span class="nav-text">Map Fields</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Any"><span class="nav-number">5.</span> <span class="nav-text">Any</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Oneof"><span class="nav-number">6.</span> <span class="nav-text">Oneof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enumerations"><span class="nav-number">7.</span> <span class="nav-text">Enumerations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Extensions-proto2-only"><span class="nav-number">8.</span> <span class="nav-text">Extensions (proto2 only)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Arena-Allocation"><span class="nav-number">9.</span> <span class="nav-text">Arena Allocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Services"><span class="nav-number">10.</span> <span class="nav-text">Services</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Interface"><span class="nav-number">10.1.</span> <span class="nav-text">Interface</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Stub"><span class="nav-number">10.2.</span> <span class="nav-text">Stub</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Plugin-Insertion-Points"><span class="nav-number">11.</span> <span class="nav-text">Plugin Insertion Points</span></a></li></ol></div>
             
 
           </div>
@@ -905,7 +915,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -919,7 +929,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">54.3k</span>
+    <span title="Site words total count">52.8k</span>
   
 </div>
 
