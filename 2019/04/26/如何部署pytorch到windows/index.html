@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="下载Libtorchlibtorch网址 在python端保存模型12345678910111213141516import torchimport torchvisionmodel=torchvision.models.resnet18(pretrained=True)example=torch.rand(1,3,2">
+<meta name="description" content="下载Libtorchlibtorch网址">
 <meta name="keywords" content="c++,pytorch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如何部署pytorch到windows">
 <meta property="og:url" content="http://maxiaoyuelun.github.io/2019/04/26/如何部署pytorch到windows/index.html">
 <meta property="og:site_name" content="老骥伏枥">
-<meta property="og:description" content="下载Libtorchlibtorch网址 在python端保存模型12345678910111213141516import torchimport torchvisionmodel=torchvision.models.resnet18(pretrained=True)example=torch.rand(1,3,224,224)model=model.eval()traced_script_m">
+<meta property="og:description" content="下载Libtorchlibtorch网址">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-26T13:24:46.372Z">
+<meta property="og:updated_time" content="2019-04-27T13:08:11.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何部署pytorch到windows">
-<meta name="twitter:description" content="下载Libtorchlibtorch网址 在python端保存模型12345678910111213141516import torchimport torchvisionmodel=torchvision.models.resnet18(pretrained=True)example=torch.rand(1,3,224,224)model=model.eval()traced_script_m">
+<meta name="twitter:description" content="下载Libtorchlibtorch网址">
 
 
 
@@ -433,7 +433,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,804
+                  1,817
                 </span>
               
 
@@ -471,6 +471,7 @@
 
       
         <h4 id="下载Libtorch"><a href="#下载Libtorch" class="headerlink" title="下载Libtorch"></a>下载Libtorch</h4><p><a href="https://pytorch.org/get-started/locally/" target="_blank" rel="noopener">libtorch网址</a></p>
+<a id="more"></a>
 <h4 id="在python端保存模型"><a href="#在python端保存模型" class="headerlink" title="在python端保存模型"></a>在python端保存模型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"></span><br><span class="line">model=torchvision.models.resnet18(pretrained=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">example=torch.rand(<span class="number">1</span>,<span class="number">3</span>,<span class="number">224</span>,<span class="number">224</span>)</span><br><span class="line"></span><br><span class="line">model=model.eval()</span><br><span class="line"></span><br><span class="line">traced_script_module=torch.jit.trace(model,example)</span><br><span class="line"></span><br><span class="line">output=traced_script_module(torch.ones(<span class="number">1</span>,<span class="number">3</span>,<span class="number">224</span>,<span class="number">224</span>))</span><br><span class="line"></span><br><span class="line">traced_script_module.save(<span class="string">'model-trace.pt'</span>)</span><br><span class="line"></span><br><span class="line">print(output[<span class="number">0</span>,:<span class="number">5</span>])</span><br></pre></td></tr></table></figure>
 <p>这样保存的模型既能在CPU端使用，也能在GPU端使用。</p>
 <h4 id="在C-端使用模型"><a href="#在C-端使用模型" class="headerlink" title="在C++端使用模型"></a>在C++端使用模型</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;torch\script.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;memory&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello Libtorch"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">shared_ptr</span>&lt;torch::jit::script::Module&gt; <span class="keyword">module</span> = torch::jit::load(<span class="string">"D:/VSCode/PythonProject/model-trace.pt"</span>);</span><br><span class="line">	<span class="keyword">module</span>-&gt;to(at::kCUDA);</span><br><span class="line">	assert(<span class="keyword">module</span> != <span class="literal">nullptr</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"OK"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;torch::jit::IValue&gt; inputs;</span><br><span class="line">	inputs.push_back(torch::ones(&#123; <span class="number">1</span>,<span class="number">3</span>,<span class="number">224</span>,<span class="number">224</span> &#125;).to(at::kCUDA));</span><br><span class="line">	<span class="keyword">auto</span> output = <span class="keyword">module</span>-&gt;forward(inputs).toTensor().to(at::kCPU);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; output.slice(<span class="number">1</span>, <span class="number">0</span>, <span class="number">5</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; output[<span class="number">0</span>][<span class="number">1</span>]&lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -489,9 +490,9 @@
 </blockquote>
 <h3 id="重要资料"><a href="#重要资料" class="headerlink" title="重要资料"></a>重要资料</h3><p>如何将maskrcnn_benchmark转换为pt供C++调用</p>
 <p>应该是他讲代码重写了，然后还需要很多调试，暂时不知道能否使用。。。。。。</p>
-<p><a href="https://github.com/facebookresearch/maskrcnn-benchmark/issues/617" target="_blank" rel="noopener"></a></p>
-<p><a href="https://github.com/t-vi/maskrcnn-benchmark/blob/scripting/demo/cpp/traced_model.cpp" target="_blank" rel="noopener"></a></p>
-<p><a href="https://github.com/t-vi/maskrcnn-benchmark/blob/scripting/demo/trace_model.py" target="_blank" rel="noopener"></a></p>
+<p><a href="https://github.com/facebookresearch/maskrcnn-benchmark/issues/617" target="_blank" rel="noopener">maskrcnn-benchmark/issues/617</a></p>
+<p><a href="https://github.com/t-vi/maskrcnn-benchmark/blob/scripting/demo/cpp/traced_model.cpp" target="_blank" rel="noopener">scripting/demo/cpp/traced_model.cpp)</a></p>
+<p><a href="https://github.com/t-vi/maskrcnn-benchmark/blob/scripting/demo/trace_model.py" target="_blank" rel="noopener">scripting/demo/trace_model.py</a></p>
 <h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><ol>
 <li><a href="https://www.cnblogs.com/cheungxiongwei/p/10689483.html" target="_blank" rel="noopener">如何在 windows 配置 libtorch c++ 前端库？</a></li>
 <li><a href="https://oldpan.me/archives/pytorch-windows-libtorch" target="_blank" rel="noopener">Pytorch的C++端(libtorch)在Windows中的使用</a></li>
@@ -761,7 +762,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">57.2k</span>
+    <span title="Site words total count">57.1k</span>
   
 </div>
 
