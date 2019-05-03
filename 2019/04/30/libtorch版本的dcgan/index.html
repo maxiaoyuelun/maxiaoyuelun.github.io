@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="libtorch,dcgan," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="贴一波代码，官方给的代码在windows环境下运行不了，这是我自己改写的代码，呕心沥血。。。。。。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596">
+<meta name="keywords" content="libtorch,dcgan">
+<meta property="og:type" content="article">
+<meta property="og:title" content="libtorch版本的dcgan">
+<meta property="og:url" content="http://maxiaoyuelun.github.io/2019/04/30/libtorch版本的dcgan/index.html">
+<meta property="og:site_name" content="老骥伏枥">
+<meta property="og:description" content="贴一波代码，官方给的代码在windows环境下运行不了，这是我自己改写的代码，呕心沥血。。。。。。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-03T11:35:52.905Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="libtorch版本的dcgan">
+<meta name="twitter:description" content="贴一波代码，官方给的代码在windows环境下运行不了，这是我自己改写的代码，呕心沥血。。。。。。 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://maxiaoyuelun.github.io/2019/04/30/libtorch版本的dcgan/"/>
+
+
+
+
+
+  <title>libtorch版本的dcgan | 老骥伏枥</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">老骥伏枥</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-murmurs">
+          <a href="/murmurs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-weibo"></i> <br />
+            
+            碎碎念
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-photos">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-photo"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-movies">
+          <a href="/movies/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-film"></i> <br />
+            
+            电影
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-book"></i> <br />
+            
+            读书
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://maxiaoyuelun.github.io/2019/04/30/libtorch版本的dcgan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="彦修">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_20180914_130614.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老骥伏枥">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">libtorch版本的dcgan</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-30T23:03:59+08:00">
+                2019-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术堆栈/" itemprop="url" rel="index">
+                    <span itemprop="name">技术堆栈</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,077
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>贴一波代码，官方给的代码在windows环境下运行不了，这是我自己改写的代码，呕心沥血。。。。。。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;torch/torch.h&gt;</span><br><span class="line"></span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">// The size of the noise vector fed to the generator.</span><br><span class="line">const int64_t kNoiseSize = 100;</span><br><span class="line"></span><br><span class="line">// The batch size for training.</span><br><span class="line">const int64_t kBatchSize = 64;</span><br><span class="line"></span><br><span class="line">// The number of epochs to train.</span><br><span class="line">const int64_t kNumberOfEpochs = 30;</span><br><span class="line"></span><br><span class="line">// Where to find the MNIST dataset.</span><br><span class="line">const char* kDataFolder = &quot;./data&quot;;</span><br><span class="line"></span><br><span class="line">// After how many batches to create a new checkpoint periodically.</span><br><span class="line">const int64_t kCheckpointEvery = 200;</span><br><span class="line"></span><br><span class="line">// How many images to sample at every checkpoint.</span><br><span class="line">const int64_t kNumberOfSamplesPerCheckpoint = 10;</span><br><span class="line"></span><br><span class="line">// Set to `true` to restore models and optimizers from previously saved</span><br><span class="line">// checkpoints.</span><br><span class="line">const bool kRestoreFromCheckpoint = false;</span><br><span class="line"></span><br><span class="line">// After how many batches to log a new update with the loss value.</span><br><span class="line">const int64_t kLogInterval = 10;</span><br><span class="line"></span><br><span class="line">using namespace torch;</span><br><span class="line"></span><br><span class="line">struct GeneratorrImpl : nn::Module &#123;</span><br><span class="line">	GeneratorrImpl()</span><br><span class="line">		: conv1(nn::Conv2dOptions(kNoiseSize, 256, 4)</span><br><span class="line">			.with_bias(false)</span><br><span class="line">			.transposed(true)),</span><br><span class="line">		batch_norm1(256),</span><br><span class="line">		conv2(nn::Conv2dOptions(256, 128, 3)</span><br><span class="line">			.stride(2)</span><br><span class="line">			.padding(1)</span><br><span class="line">			.with_bias(false)</span><br><span class="line">			.transposed(true)),</span><br><span class="line">		batch_norm2(128),</span><br><span class="line">		conv3(nn::Conv2dOptions(128, 64, 4)</span><br><span class="line">			.stride(2)</span><br><span class="line">			.padding(1)</span><br><span class="line">			.with_bias(false)</span><br><span class="line">			.transposed(true)),</span><br><span class="line">		batch_norm3(64),</span><br><span class="line">		conv4(nn::Conv2dOptions(64, 1, 4)</span><br><span class="line">			.stride(2)</span><br><span class="line">			.padding(1)</span><br><span class="line">			.with_bias(false)</span><br><span class="line">			.transposed(true)) &#123;</span><br><span class="line">		register_module(&quot;conv1&quot;, conv1);</span><br><span class="line">		register_module(&quot;conv2&quot;, conv2);</span><br><span class="line">		register_module(&quot;conv3&quot;, conv3);</span><br><span class="line">		register_module(&quot;conv4&quot;, conv4);</span><br><span class="line"></span><br><span class="line">		register_module(&quot;batch_norm1&quot;, batch_norm1);</span><br><span class="line">		register_module(&quot;batch_norm2&quot;, batch_norm2);</span><br><span class="line">		register_module(&quot;batch_norm3&quot;, batch_norm3);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	torch::Tensor forward(torch::Tensor x) &#123;</span><br><span class="line">		x = torch::relu(batch_norm1(conv1(x)));</span><br><span class="line">		x = torch::relu(batch_norm2(conv2(x)));</span><br><span class="line">		x = torch::relu(batch_norm3(conv3(x)));</span><br><span class="line">		x = torch::tanh(conv4(x));</span><br><span class="line">		return x;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	nn::Conv2d conv1, conv2, conv3, conv4;</span><br><span class="line">	nn::BatchNorm batch_norm1, batch_norm2, batch_norm3;</span><br><span class="line">&#125;;</span><br><span class="line">TORCH_MODULE(Generatorr);</span><br><span class="line"></span><br><span class="line">Generatorr generatorr;</span><br><span class="line"></span><br><span class="line">struct DiscriminatorImpl : nn::Module &#123;</span><br><span class="line">	DiscriminatorImpl()</span><br><span class="line">		: conv1(nn::Conv2dOptions(1, 64, 4).stride(2).padding(1).with_bias(false)),</span><br><span class="line">		leaky_relu1(nn::Functional(torch::leaky_relu, 0.2)),</span><br><span class="line">		conv2(nn::Conv2dOptions(64, 128, 4).stride(2).padding(1).with_bias(false)),</span><br><span class="line">		batch_norm2(128),</span><br><span class="line">		leaky_relu2(nn::Functional(torch::leaky_relu, 0.2)),</span><br><span class="line">		conv3(nn::Conv2dOptions(128, 256, 4).stride(2).padding(1).with_bias(false)),</span><br><span class="line">		batch_norm3(256),</span><br><span class="line">		leaky_relu3(nn::Functional(torch::leaky_relu, 0.2)),</span><br><span class="line">		conv4(nn::Conv2dOptions(256, 1, 3).stride(1).padding(0).with_bias(false)) &#123;</span><br><span class="line">		register_module(&quot;conv1&quot;, conv1);</span><br><span class="line">		register_module(&quot;conv2&quot;, conv2);</span><br><span class="line">		register_module(&quot;conv3&quot;, conv3);</span><br><span class="line">		register_module(&quot;conv4&quot;, conv4);</span><br><span class="line">		register_module(&quot;leaky_relu1&quot;, leaky_relu1);</span><br><span class="line">		register_module(&quot;leaky_relu2&quot;, leaky_relu2);</span><br><span class="line">		register_module(&quot;leaky_relu3&quot;, leaky_relu3);</span><br><span class="line">		register_module(&quot;batch_norm2&quot;, batch_norm2);</span><br><span class="line">		register_module(&quot;batch_norm3&quot;, batch_norm3);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	torch::Tensor forward(torch::Tensor x) &#123;</span><br><span class="line">		x = leaky_relu1(conv1(x));</span><br><span class="line">		x = leaky_relu2(batch_norm2(conv2(x)));</span><br><span class="line">		x = leaky_relu3(batch_norm3(conv3(x)));</span><br><span class="line">		x = torch::sigmoid(conv4(x));</span><br><span class="line">		return x;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	nn::Conv2d conv1, conv2, conv3, conv4;</span><br><span class="line">	nn::Functional leaky_relu1, leaky_relu2, leaky_relu3;</span><br><span class="line">	nn::BatchNorm batch_norm2, batch_norm3;</span><br><span class="line">&#125;;</span><br><span class="line">TORCH_MODULE(Discriminator);</span><br><span class="line">Discriminator discriminator;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char* argv[]) &#123;</span><br><span class="line">	torch::manual_seed(1);</span><br><span class="line"></span><br><span class="line">	// Create the device we pass around based on whether CUDA is available.</span><br><span class="line">	torch::Device device(torch::kCPU);</span><br><span class="line">	if (torch::cuda::is_available()) &#123;</span><br><span class="line">		std::cout &lt;&lt; &quot;CUDA is available! Training on GPU.&quot; &lt;&lt; std::endl;</span><br><span class="line">		device = torch::Device(torch::kCUDA);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	generatorr-&gt;to(device);</span><br><span class="line">	discriminator-&gt;to(device);</span><br><span class="line"></span><br><span class="line">	// Assume the MNIST dataset is available under `kDataFolder`;</span><br><span class="line">	auto dataset = torch::data::datasets::MNIST(kDataFolder)</span><br><span class="line">		.map(torch::data::transforms::Normalize&lt;&gt;(0.5, 0.5))</span><br><span class="line">		.map(torch::data::transforms::Stack&lt;&gt;());</span><br><span class="line">	const int64_t batches_per_epoch =</span><br><span class="line">		std::ceil(dataset.size().value() / static_cast&lt;double&gt;(kBatchSize));</span><br><span class="line"></span><br><span class="line">	auto data_loader = torch::data::make_data_loader(</span><br><span class="line">		std::move(dataset),</span><br><span class="line">		torch::data::DataLoaderOptions().batch_size(kBatchSize).workers(2));</span><br><span class="line">	torch::optim::Adam generator_optimizer(</span><br><span class="line">		generatorr-&gt;parameters(), torch::optim::AdamOptions(2e-4).beta1(0.5));</span><br><span class="line">	torch::optim::Adam discriminator_optimizer(</span><br><span class="line">		discriminator-&gt;parameters(), torch::optim::AdamOptions(2e-4).beta1(0.5));</span><br><span class="line"></span><br><span class="line">	if (kRestoreFromCheckpoint) &#123;</span><br><span class="line">		torch::load(generatorr, &quot;generator-checkpoint.pt&quot;);</span><br><span class="line">		torch::load(generator_optimizer, &quot;generator-optimizer-checkpoint.pt&quot;);</span><br><span class="line">		torch::load(discriminator, &quot;discriminator-checkpoint.pt&quot;);</span><br><span class="line">		torch::load(</span><br><span class="line">			discriminator_optimizer, &quot;discriminator-optimizer-checkpoint.pt&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	int64_t checkpoint_counter = 1;</span><br><span class="line">	for (int64_t epoch = 1; epoch &lt;= kNumberOfEpochs; ++epoch) &#123;</span><br><span class="line">		int64_t batch_index = 0;</span><br><span class="line">		for (torch::data::Example&lt;&gt;&amp; batch : *data_loader) &#123;</span><br><span class="line">			// Train discriminator with real images.</span><br><span class="line">			discriminator-&gt;zero_grad();</span><br><span class="line">			torch::Tensor real_images = batch.data.to(device);</span><br><span class="line">			torch::Tensor real_labels =</span><br><span class="line">				torch::empty(batch.data.size(0), device).uniform_(0.8, 1.0);</span><br><span class="line">			torch::Tensor real_output = discriminator-&gt;forward(real_images);</span><br><span class="line">			torch::Tensor d_loss_real =</span><br><span class="line">				torch::binary_cross_entropy(real_output, real_labels);</span><br><span class="line">			d_loss_real.backward();</span><br><span class="line"></span><br><span class="line">			// Train discriminator with fake images.</span><br><span class="line">			torch::Tensor noise =</span><br><span class="line">				torch::randn(&#123; batch.data.size(0), kNoiseSize, 1, 1 &#125;, device);</span><br><span class="line">			torch::Tensor fake_images = generatorr-&gt;forward(noise);</span><br><span class="line">			torch::Tensor fake_labels = torch::zeros(batch.data.size(0), device);</span><br><span class="line">			torch::Tensor fake_output = discriminator-&gt;forward(fake_images.detach());</span><br><span class="line">			//std::cout &lt;&lt; fake_labels.sizes() &lt;&lt; std::endl;</span><br><span class="line">			//std::cout &lt;&lt; fake_output.sizes() &lt;&lt; std::endl;</span><br><span class="line">			torch::Tensor d_loss_fake =</span><br><span class="line">				torch::binary_cross_entropy(fake_output, fake_labels);</span><br><span class="line">			d_loss_fake.backward();</span><br><span class="line"></span><br><span class="line">			torch::Tensor d_loss = d_loss_real + d_loss_fake;</span><br><span class="line">			discriminator_optimizer.step();</span><br><span class="line"></span><br><span class="line">			// Train generator.</span><br><span class="line">			generatorr-&gt;zero_grad();</span><br><span class="line">			fake_labels.fill_(1);</span><br><span class="line">			fake_output = discriminator-&gt;forward(fake_images);</span><br><span class="line">			torch::Tensor g_loss =</span><br><span class="line">				torch::binary_cross_entropy(fake_output, fake_labels);</span><br><span class="line">			g_loss.backward();</span><br><span class="line">			generator_optimizer.step();</span><br><span class="line">			batch_index++;</span><br><span class="line">			if (batch_index % kLogInterval == 0) &#123;</span><br><span class="line">				std::printf(</span><br><span class="line">					&quot;\r[%2ld/%2ld][%3ld/%3ld] D_loss: %.4f | G_loss: %.4f\n&quot;,</span><br><span class="line">					epoch,</span><br><span class="line">					kNumberOfEpochs,</span><br><span class="line">					batch_index,</span><br><span class="line">					batches_per_epoch,</span><br><span class="line">					d_loss.item&lt;float&gt;(),</span><br><span class="line">					g_loss.item&lt;float&gt;());</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			if (batch_index % kCheckpointEvery == 0) &#123;</span><br><span class="line">				// Checkpoint the model and optimizer state.</span><br><span class="line">				torch::save(generatorr, &quot;generator-checkpoint.pt&quot;);</span><br><span class="line">				torch::save(generator_optimizer, &quot;generator-optimizer-checkpoint.pt&quot;);</span><br><span class="line">				torch::save(discriminator, &quot;discriminator-checkpoint.pt&quot;);</span><br><span class="line">				torch::save(</span><br><span class="line">					discriminator_optimizer, &quot;discriminator-optimizer-checkpoint.pt&quot;);</span><br><span class="line">				// Sample the generator and save the images.</span><br><span class="line">				torch::Tensor samples = generatorr-&gt;forward(torch::randn(</span><br><span class="line">				&#123; kNumberOfSamplesPerCheckpoint, kNoiseSize, 1, 1 &#125;, device));</span><br><span class="line">				torch::save(</span><br><span class="line">					(samples + 1.0) / 2.0,</span><br><span class="line">					torch::str(&quot;dcgan-sample-&quot;, checkpoint_counter, &quot;.pt&quot;));</span><br><span class="line">				std::cout &lt;&lt; &quot;\n-&gt; checkpoint &quot; &lt;&lt; ++checkpoint_counter &lt;&lt; &apos;\n&apos;;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	std::cout &lt;&lt; &quot;Training complete!&quot; &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    彦修
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://maxiaoyuelun.github.io/2019/04/30/libtorch版本的dcgan/" title="libtorch版本的dcgan">http://maxiaoyuelun.github.io/2019/04/30/libtorch版本的dcgan/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/libtorch/" rel="tag"># libtorch</a>
+          
+            <a href="/tags/dcgan/" rel="tag"># dcgan</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/30/有关opencv的学习教程/" rel="next" title="有关opencv的学习教程">
+                <i class="fa fa-chevron-left"></i> 有关opencv的学习教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/IMG_20180914_130614.png"
+                alt="彦修" />
+            
+              <p class="site-author-name" itemprop="name">彦修</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">131</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">87</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/maxiaoyuelun" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i></a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                博客推荐
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://molunerfinn.com/" title="MARKSZのBlog" target="_blank">MARKSZのBlog</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://chensd.com/" title="不可能不确定" target="_blank">不可能不确定</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ruanyifeng.com" title="阮一峰的网络日志" target="_blank">阮一峰的网络日志</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://tianma.space/" title="Tianma" target="_blank">Tianma</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://handong1587.github.io/deep_learning/2015/10/09/object-detection.html" title="handong1587" target="_blank">handong1587</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彦修</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">58.3k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
