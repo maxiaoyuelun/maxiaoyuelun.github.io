@@ -600,7 +600,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  337
+                  344
                 </span>
               
 
@@ -616,7 +616,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -871,7 +871,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://maxiaoyuelun.github.io/2019/04/30/libtorch版本的dcgan/">
+    <link itemprop="mainEntityOfPage" href="http://maxiaoyuelun.github.io/2019/05/14/windowsws下安装coco的PythonAPI/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="彦修">
@@ -890,7 +890,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/04/30/libtorch版本的dcgan/" itemprop="url">libtorch版本的dcgan</a></h1>
+                <a class="post-title-link" href="/2019/05/14/windowsws下安装coco的PythonAPI/" itemprop="url">windowsws下安装coco的PythonAPI</a></h1>
         
 
         <div class="post-meta">
@@ -902,8 +902,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-30T23:03:59+08:00">
-                2019-04-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-14T22:21:28+08:00">
+                2019-05-14
               </time>
             
 
@@ -956,7 +956,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,077
+                  149
                 </span>
               
 
@@ -972,7 +972,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  7
+                  1
                 </span>
               
             </div>
@@ -994,10 +994,19 @@
 
       
         
-          <p>贴一波代码，官方给的代码在windows环境下运行不了，这是我自己改写的代码，呕心沥血。。。。。。</p>
+          <p>步骤：</p>
+<ol>
+<li>git clone –recursive <a href="https://github.com/cocodataset/cocoapi" target="_blank" rel="noopener">https://github.com/cocodataset/cocoapi</a> cocoapi</li>
+<li><p>打开PythonAPI中的setup.py，修改为(主要修改第12行)</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">from setuptools import setup, Extension</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"># To compile and install locally run &quot;python setup.py build_ext --inplace&quot;</span><br><span class="line"># To install library to Python site-packages run &quot;python setup.py build_ext install&quot;</span><br><span class="line"></span><br><span class="line">ext_modules = [</span><br><span class="line">  Extension(</span><br><span class="line">      &apos;pycocotools._mask&apos;,</span><br><span class="line">      sources=[&apos;../common/maskApi.c&apos;, &apos;pycocotools/_mask.pyx&apos;],</span><br><span class="line">      include_dirs = [np.get_include(), &apos;../common&apos;],</span><br><span class="line">      extra_compile_args=[]#[&apos;-Wno-cpp&apos;, &apos;-Wno-unused-function&apos;, &apos;-std=c99&apos;],这一行</span><br><span class="line">  )</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">setup(</span><br><span class="line">  name=&apos;pycocotools&apos;,</span><br><span class="line">  packages=[&apos;pycocotools&apos;],</span><br><span class="line">  package_dir = &#123;&apos;pycocotools&apos;: &apos;pycocotools&apos;&#125;,</span><br><span class="line">  install_requires=[</span><br><span class="line">      &apos;setuptools&gt;=18.0&apos;,</span><br><span class="line">      &apos;cython&gt;=0.27.3&apos;,</span><br><span class="line">      &apos;matplotlib&gt;=2.1.0&apos;</span><br><span class="line">  ],</span><br><span class="line">  version=&apos;2.0&apos;,</span><br><span class="line">  ext_modules= ext_modules</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py build develop</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/04/30/libtorch版本的dcgan/#more" rel="contents">
+            <a class="btn" href="/2019/05/14/windowsws下安装coco的PythonAPI/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1175,6 +1184,183 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2019/04/30/有关opencv的学习教程/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://maxiaoyuelun.github.io/2019/04/30/libtorch版本的dcgan/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="彦修">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_20180914_130614.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="老骥伏枥">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/30/libtorch版本的dcgan/" itemprop="url">libtorch版本的dcgan</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-30T23:03:59+08:00">
+                2019-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术堆栈/" itemprop="url" rel="index">
+                    <span itemprop="name">技术堆栈</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,077
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>贴一波代码，官方给的代码在windows环境下运行不了，这是我自己改写的代码，呕心沥血。。。。。。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/30/libtorch版本的dcgan/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -3640,186 +3826,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://maxiaoyuelun.github.io/2019/03/24/学术写作参考网站/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="彦修">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_20180914_130614.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="老骥伏枥">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/24/学术写作参考网站/" itemprop="url">学术写作参考网站</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-24T23:24:56+08:00">
-                2019-03-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术堆栈/" itemprop="url" rel="index">
-                    <span itemprop="name">技术堆栈</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  7
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <ol>
-<li><a href="https://www.english-corpora.org/coca/" target="_blank" rel="noopener">coca</a></li>
-<li><a href="http://www.phrasebank.manchester.ac.uk/" target="_blank" rel="noopener">Academic Phrasebank</a></li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/03/24/学术写作参考网站/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3874,7 +3880,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-count">133</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -3991,7 +3997,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">58.8k</span>
+    <span title="Site words total count">58.9k</span>
   
 </div>
 
