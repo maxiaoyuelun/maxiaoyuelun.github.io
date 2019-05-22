@@ -70,7 +70,7 @@
 
 
 
-  <meta name="keywords" content="cuda,dlib,face_recognition,cudnn," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -81,18 +81,17 @@
 
 
 
-<meta name="description" content="最近搞人脸识别的程序，于是广泛搜索可复用代码，再加上以前就知道的工具，在此笔记。">
-<meta name="keywords" content="cuda,dlib,face_recognition,cudnn">
+<meta name="description" content="参考资料 Create your own COCO-style datasets pycococreator">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dlib使用指南">
-<meta property="og:url" content="http://maxiaoyuelun.github.io/2017/01/03/Dlib使用指南/index.html">
+<meta property="og:title" content="创建自己的COCO数据集">
+<meta property="og:url" content="http://maxiaoyuelun.github.io/2019/05/22/创建自己的COCO数据集/index.html">
 <meta property="og:site_name" content="老骥伏枥">
-<meta property="og:description" content="最近搞人脸识别的程序，于是广泛搜索可复用代码，再加上以前就知道的工具，在此笔记。">
+<meta property="og:description" content="参考资料 Create your own COCO-style datasets pycococreator">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-03T07:37:43.716Z">
+<meta property="og:updated_time" content="2019-05-22T15:16:30.335Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Dlib使用指南">
-<meta name="twitter:description" content="最近搞人脸识别的程序，于是广泛搜索可复用代码，再加上以前就知道的工具，在此笔记。">
+<meta name="twitter:title" content="创建自己的COCO数据集">
+<meta name="twitter:description" content="参考资料 Create your own COCO-style datasets pycococreator">
 
 
 
@@ -122,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://maxiaoyuelun.github.io/2017/01/03/Dlib使用指南/"/>
+  <link rel="canonical" href="http://maxiaoyuelun.github.io/2019/05/22/创建自己的COCO数据集/"/>
 
 
 
 
 
-  <title>Dlib使用指南 | 老骥伏枥</title>
+  <title>创建自己的COCO数据集 | 老骥伏枥</title>
   
 
 
@@ -339,7 +338,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://maxiaoyuelun.github.io/2017/01/03/Dlib使用指南/">
+    <link itemprop="mainEntityOfPage" href="http://maxiaoyuelun.github.io/2019/05/22/创建自己的COCO数据集/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="彦修">
@@ -356,7 +355,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Dlib使用指南</h1>
+          <h1 class="post-title" itemprop="name headline">创建自己的COCO数据集</h1>
         
 
         <div class="post-meta">
@@ -368,8 +367,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-03T15:14:52+08:00">
-                2017-01-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-22T23:14:13+08:00">
+                2019-05-22
               </time>
             
 
@@ -422,7 +421,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  124
+                  13
                 </span>
               
 
@@ -459,22 +458,16 @@
       
 
       
-        <blockquote>
-<p>最近搞人脸识别的程序，于是广泛搜索可复用代码，再加上以前就知道的工具，在此笔记。</p>
-</blockquote>
-<a id="more"></a>
-<p>进入<code>D:/github/dlib/</code>，打开cmd。在此之前需要安装<a href="https://cmake.org/" target="_blank" rel="noopener">cmake</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> examples</span><br><span class="line">mkdir build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">cmake -G <span class="string">"Visual Studio 14 2015 Win64"</span> -DCOMPILER_CAN_DO_CPP_11=ON -DCMAKE_PREFIX_PATH=<span class="string">"D:/githun/cudnn/"</span> ..</span><br><span class="line">cmake --build . --config Release</span><br></pre></td></tr></table></figure>
-<p>face_recognition是搭建在dlib之上的代码，一个很好的框架。</p>
-<p>测试代码</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
-<li><a href="http://dlib.net/" target="_blank" rel="noopener">Dlib官网</a></li>
-<li><a href="https://github.com/davisking/dlib" target="_blank" rel="noopener">Dlib github</a></li>
-<li><a href="https://github.com/ageitgey/face_recognition" target="_blank" rel="noopener">face_recognition github</a></li>
-<li><a href="https://github.com/MarekKowalski/FaceSwap" target="_blank" rel="noopener">FaceSwap github</a></li>
-<li><a href="https://github.com/davisking/dlib/issues/756" target="_blank" rel="noopener">Dlib CUDA安装</a></li>
-</ol>
+        <div style="text-align:center">
+  <div class="github-card" data-user="waspinator" data-repo="pycococreator" data-width="400" data-theme="default" data-target="" data-client-id="" data-client-secret=""></div>
+</div>
+<script src="/github-card-lib/githubcard.js"></script>
 
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ol>
+<li><a href="https://patrickwasp.com/create-your-own-coco-style-dataset/" target="_blank" rel="noopener">Create your own COCO-style datasets</a></li>
+<li><a href="https://github.com/waspinator/pycococreator" target="_blank" rel="noopener">pycococreator</a></li>
+</ol>
+<a id="more"></a>
       
     </div>
     
@@ -494,7 +487,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://maxiaoyuelun.github.io/2017/01/03/Dlib使用指南/" title="Dlib使用指南">http://maxiaoyuelun.github.io/2017/01/03/Dlib使用指南/</a>
+    <a href="http://maxiaoyuelun.github.io/2019/05/22/创建自己的COCO数据集/" title="创建自己的COCO数据集">http://maxiaoyuelun.github.io/2019/05/22/创建自己的COCO数据集/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -507,18 +500,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/cuda/" rel="tag"># cuda</a>
-          
-            <a href="/tags/dlib/" rel="tag"># dlib</a>
-          
-            <a href="/tags/face-recognition/" rel="tag"># face_recognition</a>
-          
-            <a href="/tags/cudnn/" rel="tag"># cudnn</a>
-          
-        </div>
-      
 
       
       
@@ -528,8 +509,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/13/车站/" rel="next" title="车站">
-                <i class="fa fa-chevron-left"></i> 车站
+              <a href="/2019/05/21/anchor-free论文/" rel="next" title="anchor-free论文">
+                <i class="fa fa-chevron-left"></i> anchor-free论文
               </a>
             
           </div>
@@ -537,10 +518,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/14/Git-Bash不能输入中文解决办法/" rel="prev" title="Git Bash不能输入中文解决办法">
-                Git Bash不能输入中文解决办法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
